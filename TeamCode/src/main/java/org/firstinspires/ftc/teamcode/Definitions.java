@@ -15,11 +15,11 @@ public class Definitions
     ElapsedTime runtime = new ElapsedTime(); // Defines the Up Time of the program
 
 
-    final int FORWARD = 0;
-    final int BACKWARD = 1;
-    final int STRAFELEFT = 2;
-    final int STRAFERIGHT = 3;
-    final int ROTATE = 4;
+    public final int FORWARD = 0;
+    public final int BACKWARD = 1;
+    public final int STRAFELEFT = 2;
+    public final int STRAFERIGHT = 3;
+    public final int ROTATE = 4;
 
     DcMotor leftFront;
     DcMotor leftBack;
@@ -148,10 +148,10 @@ public class Definitions
         rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    void moveInches(int i, double power, int inchesToMove)
+    void moveInches(int direction, double power, int inchesToMove)
     {
         resetEncoders();
-        switch(i)
+        switch(direction)
         {
             case FORWARD:
                 setDriveForward();

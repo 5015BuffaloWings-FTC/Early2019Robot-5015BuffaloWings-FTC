@@ -22,11 +22,7 @@ public class ExampleAuto extends LinearOpMode
 
 		while(opModeIsActive())
 		{
-			robot.resetEncoders();
-			robot.setDriveForward();
-			robot.setPower(1);
-			robot.setPos(10);
-			robot.runPos();
+			robot.moveInches(robot.FORWARD, 5, 100);
 		}
 	}
 }
