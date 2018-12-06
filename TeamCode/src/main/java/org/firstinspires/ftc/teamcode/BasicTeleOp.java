@@ -21,9 +21,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class BasicTeleOp extends LinearOpMode
 {
     private Definitions robot = new Definitions();
-    // Creates object for using Vuforia
-    //private Vuforia_Definitions vRobot = new Vuforia_Definitions();
-    //private BasicTeleOp teleOp = new BasicTeleOp();
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
 
     @Override
@@ -31,13 +28,11 @@ public class BasicTeleOp extends LinearOpMode
     {
 
         robot.robotHardwareMapInit(hardwareMap);
-        //vRobot.initVuforia(teleOp, robot);
 		robot.init();
 
 
 
         waitForStart();
-        //vRobot.activateTracking();
 
         while(opModeIsActive())
 		{
@@ -128,15 +123,6 @@ public class BasicTeleOp extends LinearOpMode
 			//hold the arm steady.
 			telemetry.addLine()
 					.addData("GamePad 2", gamepad2.left_stick_y);
-
-			//vRobot.addNavTelemetry();
-
-
 		}
-
-
-
-
-
     }
 }

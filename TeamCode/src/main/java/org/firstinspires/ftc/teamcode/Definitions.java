@@ -64,6 +64,7 @@ public class Definitions
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
 
@@ -146,6 +147,7 @@ public class Definitions
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     void moveInches(int direction, double power, int inchesToMove)
