@@ -1,142 +1,132 @@
 package org.firstinspires.ftc.teamcode;
 
+//These are need to have the app run the code properly
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
+
+//Needed to alter inputs from joysticks. The clip() method/function is what we use most
 import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 
 /**
  * @author Noah Zulick
  * @author Sam Carter
  *
- * @version 9-21
+ * @version 12-5-18
  */
 
 @TeleOp(name = "Basic TeleOp v0.4", group = "Buffalo Wings")
 public class BasicTeleOp extends LinearOpMode
 {
     private Definitions robot = new Definitions();
-    // Creates object for using Vuforia
-    //private Vuforia_Definitions vRobot = new Vuforia_Definitions();
-    //private BasicTeleOp teleOp = new BasicTeleOp();
-    private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-
     @Override
     public void runOpMode() throws InterruptedException
     {
-
+    	//ROBOT DRIVING SECTION
+    	//Sets up robot
         robot.robotHardwareMapInit(hardwareMap);
-        //vRobot.initVuforia(teleOp, robot);
-		robot.init();
-
-
-
         waitForStart();
-        //vRobot.activateTracking();
 
+        //This is what will run during the Remotely Operated mode
         while(opModeIsActive())
 		{
-			double slow;
-			if(gamepad1.right_bumper == true)
+			//slow is used as a multiplier to change speed
+			double slowMovement;
+			if(gamepad1.right_bumper)
 			{
-				slow = 0.5;
+				slowMovement = 0.5;
 			}
 			else
 			{
-				slow = 1;
+				slowMovement= 1;
 			}
 
-			double DFR = Range.clip((-gamepad1.left_stick_y - (0.87 * gamepad1.left_stick_x) - gamepad1.right_stick_x) * slow, -1, 1);//to 1 making sure they don't burn out.
-			double DFL = Range.clip((gamepad1.left_stick_y - (0.87 * gamepad1.left_stick_x) - gamepad1.right_stick_x) * slow, -1, 1); //This will clip the outputs to the motors
-			double DBR = Range.clip((-gamepad1.left_stick_y + (0.87 * gamepad1.left_stick_x) - gamepad1.right_stick_x) * slow, -1, 1);
-			double DBL = Range.clip((gamepad1.left_stick_y + (0.87 * gamepad1.left_stick_x) - gamepad1.right_stick_x) * slow, -1, 1);
+			//Using Range.clip to limit joystick values from -1 to 1 (clipping the outputs)
+			double driveFrontRightPower = Range.clip((-gamepad1.left_stick_y - (gamepad1.left_stick_x) - gamepad1.right_stick_x) * slowMovement, -1, 1);
+			double driveFrontLeftPower = Range.clip((gamepad1.left_stick_y - (gamepad1.left_stick_x) - gamepad1.right_stick_x) * slowMovement, -1, 1);
+			double driveBackRightPower = Range.clip((-gamepad1.left_stick_y + (gamepad1.left_stick_x) - gamepad1.right_stick_x) * slowMovement, -1, 1);
+			double driveBackLeftPower = Range.clip((gamepad1.left_stick_y + (gamepad1.left_stick_x) - gamepad1.right_stick_x) * slowMovement, -1, 1);
 
 			// Apply the values to the motors.
+			robot.rightFrontMotor.setPower(driveFrontRightPower);
+			robot.leftFrontMotor.setPower(driveFrontLeftPower);
+			robot.rightBackMotor.setPower(driveBackRightPower);
+			robot.leftBackMotor.setPower(driveBackLeftPower);
 
-			robot.rightFront.setPower(DFR);
-			robot.leftFront.setPower(DFL);
-			robot.rightBack.setPower(DBR);
-			robot.leftBack.setPower(DBL);
 
 
-			double armSlow;
-			if(gamepad2.left_bumper == true)
+
+
+			//SCORING ARM SECTION
+			//Scoring arm - Speed control, Default 0.65, With Left_bumper: 0.85,
+			double scoringArmSlow;
+			if(gamepad2.left_bumper)
 			{
-				armSlow = 0.85;
+				scoringArmSlow = 0.85;
 			}
 			else
 			{
-				armSlow = 0.5;
+				scoringArmSlow = 0.65;
 			}
-			//Makes Lift Arm Motor Move
-			double Arm = gamepad2.left_stick_y * armSlow;
+
+			//Scoring arm - controls input from gamepad2 left joystick
+			double scoringArmMotorPower = Range.clip(gamepad2.left_stick_y, -1, 1);
+
+			//Scoring arm - Sets speed for lift arm using the armSlow multiplier
+			robot.scoringArmMotor.setPower(scoringArmMotorPower * scoringArmSlow);
 
 
-			//Changes Lift Arm Speed/Power
-			if(gamepad2.left_stick_y > 0 || gamepad2.left_stick_y < 0)
+
+
+
+
+
+			//LEAD SCREW SECTION
+			if(!(robot.leadScrewLimitTop.isPressed() || robot.leadScrewLimitBot.isPressed()))
 			{
-				robot.armMotor1.setPower(Arm);
+				//Lead Screw Motor - limits input from gamepad2 right joystick
+				double leadScrewMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
+
+				//Lead Screw Motor - Sets power to motor after being calculated
+				robot.leadScrewMotor.setPower(leadScrewMotorPower);
 			}
-			else if(gamepad2.right_bumper == true)
+			else if(robot.leadScrewLimitTop.isPressed()) //Top limit switch has been pressed
 			{
-				robot.armMotor1.setPower(-0.5);
+				robot.leadScrewMotor.setPower(-1);
 			}
-			else if(gamepad2.left_trigger > 0)
+			else //bottom limit switch has been pressed
 			{
-				robot.armMotor1.setPower(0.8);
+				robot.leadScrewMotor.setPower(1);
+			}
+
+
+
+
+
+
+
+
+			//LEAD SCREW SECTION
+			//Gamepad 2 button Y - releases the arm
+			if(gamepad2.y)
+			{
+				robot.scoringArmReleaseServo.setPosition(0);
+			}
+
+			//Gamepad 2 button A - Latches the scoring arm into place
+			if(gamepad2.a)
+			{
+				robot.armLatchServo.setPosition(1);
+			}
+
+			//Gamepad 2 button B - Opens the scoring arm container
+			if(gamepad2.b)
+			{
+				robot.ballStopServo.setPosition(0.5);
 			}
 			else
 			{
-				robot.armMotor1.setPower(0);
+				robot.ballStopServo.setPosition(0);
 			}
-
-			//Controls  Servos IMPROVE THIS COMMENT
-			if(gamepad2.y == true)
-			{
-				robot.release.setPower(1);
-			}
-			else
-			{
-				robot.release.setPower(0);
-			}
-
-			if(gamepad2.b == true)
-			{
-				robot.ballStopper.setPosition(0.5);
-			}
-			else if(gamepad2.b != true)
-			{
-				robot.ballStopper.setPosition(0);
-			}
-
-			if(gamepad2.a == true)
-			{
-				robot.latch.setPower(1);
-			}
-
-
-
-
-			//We added this line of telemetry because the robot arm is not strong enough at
-			// 0 power to hold the arm up...
-			//So we are going to find what power the arm needs to be at in order to
-			//hold the arm steady.
-			telemetry.addLine()
-					.addData("GamePad 2", gamepad2.left_stick_y);
-
-			//vRobot.addNavTelemetry();
-
-
 		}
-
-
-
-
-
     }
 }
