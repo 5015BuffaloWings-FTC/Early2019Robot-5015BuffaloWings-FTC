@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by Noah on 12/5/18.
  */
 @TeleOp(name = "armTest Auto")
+
 public class armTest extends LinearOpMode
 {
     Definitions robot = new Definitions();
@@ -24,7 +25,7 @@ public class armTest extends LinearOpMode
         while(opModeIsActive())
         {
             double armSlow;
-            if(gamepad2.left_bumper == true)
+            if(gamepad2.left_bumper)
             {
                 armSlow = 0.85;
             }
@@ -39,25 +40,39 @@ public class armTest extends LinearOpMode
             //Changes Lift Arm Speed/Power
             if(gamepad2.left_stick_y > 0 || gamepad2.left_stick_y < 0)
             {
-                robot.armMotor1.setPower(Arm);
+                robot.scoringArmMotor.setPower(Arm);
             }
-            else if(gamepad2.right_bumper == true)
+            else if(gamepad2.right_bumper)
             {
-                robot.armMotor1.setPower(-0.5);
+                robot.scoringArmMotor.setPower(-0.5);
             }
             else if(gamepad2.left_trigger > 0)
             {
-                robot.armMotor1.setPower(0.8);
+                robot.scoringArmMotor.setPower(0.8);
             }
             else
             {
-                robot.armMotor1.setPower(0);
+                robot.scoringArmMotor.setPower(Arm);
+            }
+
+
+            if(gamepad2.right_bumper)
+            {
+                robot.scoringArmMotor.setPower(-0.5);
+            }
+            else if(gamepad2.left_trigger > 0)
+            {
+                robot.scoringArmMotor.setPower(0.8);
+            }
+            else
+            {
+                robot.scoringArmMotor.setPower(0);
             }
 
             //allows us to reset the Arm encoders ourselves just for better calibration
             if(gamepad2.dpad_up)
             {
-                robot.armMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                robot.scoringArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             }
 
 
@@ -68,7 +83,7 @@ public class armTest extends LinearOpMode
             final double weightOfArm = 0;
             final double armPositionAt90 = 0;
             final double powerToHoldArmAt90 = 0;
-            double armPosition = 0 + robot.armMotor1.getCurrentPosition(); //This could be changed to make the value equal to zero at ground level using another couple methods
+            double armPosition = 0 + robot.scoringArmMotor.getCurrentPosition(); //This could be changed to make the value equal to zero at ground level using another couple methods
             double angleOfArm = (90 * armPosition)/armPositionAt90;
             double loweringPower = (angleOfArm * powerToHoldArmAt90)/ 90 - 0.1; //I subtracted the 0.1 because we want the arm to lower slowly not just hold
 
@@ -76,7 +91,7 @@ public class armTest extends LinearOpMode
             {
                 if(armPosition <= armPositionAt90)
                 {
-                    robot.armMotor1.setPower(loweringPower);
+                    robot.scoringArmMotor.setPower(loweringPower);
                 }
             }
 
