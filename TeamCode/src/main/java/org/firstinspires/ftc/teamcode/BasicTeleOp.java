@@ -19,10 +19,11 @@ import com.qualcomm.robotcore.util.Range;
  * Start A - Controls wheels
  * Start B - Controls scoring arm and lead screw
  *
+ *     Left bumper                           Right bumper
  *       _=====_                               _=====_
  *      / _____ \                             / _____ \
  *    +.-'_____'-.---------------------------.-'_____'-.+
- *   /   |     |  '.        Start A        .'  |  _  |   \
+ *   /   |     |  '.        L O G I        .'  |  _  |   \
  *  / ___| /|\ |___ \                     / ___| /Y\ |___ \
  * / |      |      | ;  __           _   ; | _         _ | ;
  * | | <---   ---> | | |__|         |_:> | ||X|       (B)| |
@@ -37,31 +38,15 @@ import com.qualcomm.robotcore.util.Range;
  *  \          /                              \           /
  *   \________/                                \_________/
  *
- * Start A;
- * Joy R: Controls lateral movement
- * Joy L: Controls
+ * Start A - Movement;
+ * Joy R: lateral movement (All directions)
+ * Joy L: Controls Rotation (Limited to left and right)
+ * Right b 
  *
  *
- *       _=====_                               _=====_
- *      / _____ \                             / _____ \
- *    +.-'_____'-.---------------------------.-'_____'-.+
- *   /   |     |  '.        Start B        .'  |  _  |   \
- *  / ___| /|\ |___ \                     / ___| /Y\ |___ \
- * / |      |      | ;  __           _   ; | _         _ | ;
- * | | <---   ---> | | |__|         |_:> | ||X|       (B)| |
- * | |___   |   ___| ;SELECT       START ; |___       ___| ;
- * |\    | \|/ |    /  _     ___      _   \    | (A) |    /|
- * | \   |_____|  .','" "', |___|  ,'" "', '.  |_____|  .' |
- * |  '-.______.-' /       \ANALOG/       \  '-._____.-'   |
- * |               | Joy L |------| Joy R  |               |
- * |              /\       /      \       /\               |
- * |             /  '.___.'        '.___.'  \              |
- * |            /                            \             |
- *  \          /                              \           /
- *   \________/                                \_________/
- *
- *
- *
+ * Start B - Scoring:
+ * Joy R: Lead screw (Limited to up and down)
+ * Joy L: Scoring arm (Limited to up and down)
  *
  */
 
