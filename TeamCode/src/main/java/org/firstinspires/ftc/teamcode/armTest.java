@@ -74,6 +74,12 @@ public class armTest extends LinearOpMode
             {
                 robot.scoringArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             }
+            else
+            {
+                robot.scoringArmMotor.setPower(gamepad2.left_stick_y);
+            }
+
+
 
 
             /**
@@ -81,8 +87,8 @@ public class armTest extends LinearOpMode
              *
              */
             final double weightOfArm = 0;
-            final double armPositionAt90 = 0;
-            final double powerToHoldArmAt90 = 0;
+            final double armPositionAt90 = -37;
+            final double powerToHoldArmAt90 = -0.5;
             double armPosition = 0 + robot.scoringArmMotor.getCurrentPosition(); //This could be changed to make the value equal to zero at ground level using another couple methods
             double angleOfArm = (90 * armPosition)/armPositionAt90;
             double loweringPower = (angleOfArm * powerToHoldArmAt90)/ 90 - 0.1; //I subtracted the 0.1 because we want the arm to lower slowly not just hold
@@ -93,6 +99,7 @@ public class armTest extends LinearOpMode
                 {
 
                 }
+
             }
             robot.scoringArmMotor.setPower(gamepad2.left_stick_y);
 
@@ -101,6 +108,8 @@ public class armTest extends LinearOpMode
                     .addData("Arm Power: ", gamepad2.left_stick_y)
                     .addData("Lowering Power: ", loweringPower)
                     .addData("Angle Of Arm: ", angleOfArm);
+
+            telemetry.update();
         }
     }
 }
