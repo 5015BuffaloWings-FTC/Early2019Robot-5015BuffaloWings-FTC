@@ -41,12 +41,14 @@ import com.qualcomm.robotcore.util.Range;
  * Start A - Movement;
  * Joy R: lateral movement (All directions)
  * Joy L: Controls Rotation (Limited to left and right)
- * Right b 
+ * Right bumper: Slows movement to 0.5 or normal
+ *
  *
  *
  * Start B - Scoring:
  * Joy R: Lead screw (Limited to up and down)
  * Joy L: Scoring arm (Limited to up and down)
+ *
  *
  */
 
@@ -109,34 +111,34 @@ public class BasicTeleOp extends LinearOpMode
 			}
 
 			//Scoring arm - controls input from gamepad2 left joystick
-			double scoringArmMotorPower = Range.clip(gamepad2.left_stick_y, -1, 1);
+			double scoringArmMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
 
 			//Scoring arm - Sets speed for lift arm using the armSlow multiplier
 			robot.scoringArmMotor.setPower(scoringArmMotorPower * scoringArmSlow);
 
 
 
+			//Lead Screw Motor - limits input from gamepad2 right joystick
+			double leadScrewMotorPower = Range.clip(gamepad2.left_stick_y, -1, 1);
+
+			//Lead Screw Motor - Sets power to motor after being calculated
+			robot.leadScrewMotor.setPower(leadScrewMotorPower);
 
 
 
-
-			//LEAD SCREW SECTION
-			if(!(robot.leadScrewLimitTop.isPressed() || robot.leadScrewLimitBot.isPressed()))
-			{
-				//Lead Screw Motor - limits input from gamepad2 right joystick
-				double leadScrewMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
-
-				//Lead Screw Motor - Sets power to motor after being calculated
-				robot.leadScrewMotor.setPower(leadScrewMotorPower);
-			}
-			else if(robot.leadScrewLimitTop.isPressed()) //Top limit switch has been pressed
-			{
-				robot.leadScrewMotor.setPower(-1);
-			}
-			else //bottom limit switch has been pressed
-			{
-				robot.leadScrewMotor.setPower(1);
-			}
+//			//LEAD SCREW SECTION
+//			if(!(robot.leadScrewLimitTop.isPressed() || robot.leadScrewLimitBot.isPressed()))
+//			{
+//
+//			}
+//			else if(robot.leadScrewLimitTop.isPressed()) //Top limit switch has been pressed
+//			{
+//				robot.leadScrewMotor.setPower(-1);
+//			}
+//			else //bottom limit switch has been pressed
+//			{
+//				robot.leadScrewMotor.setPower(1);
+//			}
 
 
 
@@ -147,6 +149,7 @@ public class BasicTeleOp extends LinearOpMode
 			//hold the arm steady.
 			telemetry.addLine()
 					.addData("GamePad 2", gamepad2.left_stick_y);
+
 
 
 			//LEAD SCREW SECTION

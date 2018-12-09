@@ -44,11 +44,12 @@ public class Definitions
         rightBackMotor = Map.dcMotor.get("rightBackMotor");
         rightFrontMotor = Map.dcMotor.get("rightFrontMotor");
         scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
+        leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
         scoringArmReleaseServo = Map.servo.get("armReleaseServo");
         ballStopServo = Map.servo.get("ballStopper");
         armLatchServo = Map.servo.get("latch");
-        leadScrewLimitTop = Map.touchSensor.get("leadScrewLimitTop");
-        leadScrewLimitBot = Map.touchSensor.get("leadScrewLimitBot");
+        //leadScrewLimitTop = Map.touchSensor.get("leadScrewLimitTop");
+        //leadScrewLimitBot = Map.touchSensor.get("leadScrewLimitBot");
     }
 
     void init()

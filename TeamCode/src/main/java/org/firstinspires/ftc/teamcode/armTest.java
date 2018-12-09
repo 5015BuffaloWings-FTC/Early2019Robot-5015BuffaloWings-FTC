@@ -24,50 +24,50 @@ public class armTest extends LinearOpMode
 
         while(opModeIsActive())
         {
-            double armSlow;
-            if(gamepad2.left_bumper)
-            {
-                armSlow = 0.85;
-            }
-            else
-            {
-                armSlow = 0.5;
-            }
-            //Makes Lift Arm Motor Move
-            double Arm = gamepad2.left_stick_y * armSlow;
-
-
-            //Changes Lift Arm Speed/Power
-            if(gamepad2.left_stick_y > 0 || gamepad2.left_stick_y < 0)
-            {
-                robot.scoringArmMotor.setPower(Arm);
-            }
-            else if(gamepad2.right_bumper)
-            {
-                robot.scoringArmMotor.setPower(-0.5);
-            }
-            else if(gamepad2.left_trigger > 0)
-            {
-                robot.scoringArmMotor.setPower(0.8);
-            }
-            else
-            {
-                robot.scoringArmMotor.setPower(Arm);
-            }
-
-
-            if(gamepad2.right_bumper)
-            {
-                robot.scoringArmMotor.setPower(-0.5);
-            }
-            else if(gamepad2.left_trigger > 0)
-            {
-                robot.scoringArmMotor.setPower(0.8);
-            }
-            else
-            {
-                robot.scoringArmMotor.setPower(0);
-            }
+//            double armSlow;
+//            if(gamepad2.left_bumper)
+//            {
+//                armSlow = 0.85;
+//            }
+//            else
+//            {
+//                armSlow = 0.5;
+//            }
+//            //Makes Lift Arm Motor Move
+//            double Arm = gamepad2.left_stick_y * armSlow;
+//
+//
+//            //Changes Lift Arm Speed/Power
+//            if(gamepad2.left_stick_y > 0 || gamepad2.left_stick_y < 0)
+//            {
+//                robot.scoringArmMotor.setPower(Arm);
+//            }
+//            else if(gamepad2.right_bumper)
+//            {
+//                robot.scoringArmMotor.setPower(-0.5);
+//            }
+//            else if(gamepad2.left_trigger > 0)
+//            {
+//                robot.scoringArmMotor.setPower(0.8);
+//            }
+//            else
+//            {
+//                robot.scoringArmMotor.setPower(Arm);
+//            }
+//
+//
+//            if(gamepad2.right_bumper)
+//            {
+//                robot.scoringArmMotor.setPower(-0.5);
+//            }
+//            else if(gamepad2.left_trigger > 0)
+//            {
+//                robot.scoringArmMotor.setPower(0.8);
+//            }
+//            else
+//            {
+//                robot.scoringArmMotor.setPower(0);
+//            }
 
             //allows us to reset the Arm encoders ourselves just for better calibration
             if(gamepad2.dpad_up)
@@ -91,9 +91,10 @@ public class armTest extends LinearOpMode
             {
                 if(armPosition <= armPositionAt90)
                 {
-                    robot.scoringArmMotor.setPower(loweringPower);
+
                 }
             }
+            robot.scoringArmMotor.setPower(gamepad2.left_stick_y);
 
             telemetry.addLine("Values for Arm")
                     .addData("Arm Position: ", armPosition)
