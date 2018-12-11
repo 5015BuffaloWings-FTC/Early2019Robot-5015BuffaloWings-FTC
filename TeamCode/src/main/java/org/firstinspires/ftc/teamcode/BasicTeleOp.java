@@ -103,7 +103,7 @@ public class BasicTeleOp extends LinearOpMode
 			double scoringArmSlow;
 			if(gamepad2.left_bumper)
 			{
-				scoringArmSlow = 0.85;
+				scoringArmSlow = 1;
 			}
 			else
 			{
@@ -111,18 +111,24 @@ public class BasicTeleOp extends LinearOpMode
 			}
 
 			//Scoring arm - controls input from gamepad2 left joystick
-			double scoringArmMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
+			double scoringArmMotorPower = Range.clip(gamepad2.left_stick_y, -1, 1);
 
 			//Scoring arm - Sets speed for lift arm using the armSlow multiplier
-			robot.scoringArmMotor.setPower(scoringArmMotorPower * scoringArmSlow);
-
+			if(gamepad2.right_bumper)
+			{
+				robot.scoringArmMotor.setPower(0.5);
+			}
+			else
+			{
+				robot.scoringArmMotor.setPower(scoringArmMotorPower * scoringArmSlow);
+			}
 
 
 			//Lead Screw Motor - limits input from gamepad2 right joystick
-			double leadScrewMotorPower = Range.clip(gamepad2.left_stick_y, -1, 1);
+			double leadScrewMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
 
 			//Lead Screw Motor - Sets power to motor after being calculated
-			robot.leadScrewMotor.setPower(leadScrewMotorPower);
+			robot.leadScrewMotor.setPower(-leadScrewMotorPower);
 
 
 
@@ -156,23 +162,28 @@ public class BasicTeleOp extends LinearOpMode
 			//Gamepad 2 button Y - releases the arm
 			if(gamepad2.y)
 			{
-				robot.scoringArmReleaseServo.setPosition(0);
+				robot.scoringArmReleaseServo.setPosition(0.5);
 			}
 
 			//Gamepad 2 button A - Latches the scoring arm into place
 			if(gamepad2.a)
 			{
-				robot.armLatchServo.setPosition(1);
+				robot.armLatchServo.setPosition(0.5);
 			}
 
 			//Gamepad 2 button B - Opens the scoring arm container
 			if(gamepad2.b)
 			{
-				robot.ballStopServo.setPosition(0.5);
+				robot.ballStopServo.setPosition(0.25);
 			}
 			else
 			{
 				robot.ballStopServo.setPosition(0);
+			}
+
+			if(gamepad2.x)
+			{
+				//code
 			}
 
 		}

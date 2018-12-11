@@ -22,19 +22,24 @@ public class Definitions
     public final int STRAFERIGHT = 3;
     public final int ROTATE = 4;
 
-    DcMotor leftFrontMotor;
-    DcMotor leftBackMotor;
-    DcMotor rightFrontMotor;
-    DcMotor rightBackMotor;
-    DcMotor scoringArmMotor;
-    DcMotor leadScrewMotor;
-    Servo scoringArmReleaseServo;
-    Servo ballStopServo;
-    Servo armLatchServo;
+    DcMotor leftFrontMotor = null;
+    DcMotor leftBackMotor = null;
+    DcMotor rightFrontMotor = null;
+    DcMotor rightBackMotor = null;
+    DcMotor scoringArmMotor = null;
+    DcMotor leadScrewMotor = null;
+    Servo scoringArmReleaseServo = null;
+    Servo ballStopServo = null;
+    Servo armLatchServo = null;
     TouchSensor leadScrewLimitTop;
     TouchSensor leadScrewLimitBot;
 
     //Constructor to initialize variables
+
+    public Definitions()
+    {
+
+    }
 
     public void robotHardwareMapInit(HardwareMap Map)
     {
@@ -54,11 +59,24 @@ public class Definitions
 
     void init()
     {
-        //
+         leftFrontMotor.setPower(0);
+         leftBackMotor.setPower(0);
+         rightFrontMotor.setPower(0);
+         rightBackMotor.setPower(0);
+         scoringArmMotor.setPower(0);
+         leadScrewMotor.setPower(0);
+    }
+
+    void servoInit()
+    {
+        scoringArmReleaseServo.setPosition(0);
+        ballStopServo.setPosition(0);
+        armLatchServo.setPosition(0);
     }
 
     void encoderInit()
     {
+        resetEncoders();
         leftBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -162,8 +180,8 @@ public class Definitions
                 setStrafeRight();
         }
 
-        setPower(power);
         setPos(inchesToMove);
+        setPower(power);
         runPos();
 
 
