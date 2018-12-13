@@ -124,27 +124,21 @@ public class BasicTeleOp extends LinearOpMode
 			}
 
 
-			//Lead Screw Motor - limits input from gamepad2 right joystick
-			double leadScrewMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
 
-			//Lead Screw Motor - Sets power to motor after being calculated
-			robot.leadScrewMotor.setPower(-leadScrewMotorPower);
+
 
 
 
 //			//LEAD SCREW SECTION
-//			if(!(robot.leadScrewLimitTop.isPressed() || robot.leadScrewLimitBot.isPressed()))
-//			{
-//
-//			}
-//			else if(robot.leadScrewLimitTop.isPressed()) //Top limit switch has been pressed
-//			{
-//				robot.leadScrewMotor.setPower(-1);
-//			}
-//			else //bottom limit switch has been pressed
-//			{
-//				robot.leadScrewMotor.setPower(1);
-//			}
+        	//if(robot.leadScrewMotor.getCurrentPosition())
+    		//{
+                //Lead Screw Motor - limits input from gamepad2 right joystick
+            double leadScrewMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
+
+			    //Lead Screw Motor - Sets power to motor after being calculated
+            robot.leadScrewMotor.setPower(-leadScrewMotorPower);
+			//}
+
 
 
 
@@ -153,8 +147,9 @@ public class BasicTeleOp extends LinearOpMode
 			// 0 power to hold the arm up...
 			//So we are going to find what power the arm needs to be at in order to
 			//hold the arm steady.
-			telemetry.addLine()
-					.addData("GamePad 2", gamepad2.left_stick_y);
+			telemetry.addLine("Values\n")
+					.addData("lead screw value: ", robot.leadScrewMotor.getCurrentPosition());
+			telemetry.update();
 
 
 

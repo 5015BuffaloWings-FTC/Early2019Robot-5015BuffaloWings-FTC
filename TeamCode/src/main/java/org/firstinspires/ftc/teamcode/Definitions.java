@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -31,8 +32,10 @@ public class Definitions
     Servo scoringArmReleaseServo = null;
     Servo ballStopServo = null;
     Servo armLatchServo = null;
-    TouchSensor leadScrewLimitTop;
-    TouchSensor leadScrewLimitBot;
+    ColorSensor colorSensorRight = null;
+    ColorSensor colorSensorLeft = null;
+    //TouchSensor leadScrewLimitTop;
+    //TouchSensor leadScrewLimitBot;
 
     //Constructor to initialize variables
 
@@ -51,11 +54,44 @@ public class Definitions
         scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
         leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
         scoringArmReleaseServo = Map.servo.get("armReleaseServo");
-        ballStopServo = Map.servo.get("ballStopper");
-        armLatchServo = Map.servo.get("latch");
+        ballStopServo = Map.servo.get("ballStopperServo");
+        armLatchServo = Map.servo.get("latchServo");
+        colorSensorRight = Map.colorSensor.get("colorSensorRight");
+        colorSensorLeft = Map.colorSensor.get("colorSensorLeft");
         //leadScrewLimitTop = Map.touchSensor.get("leadScrewLimitTop");
         //leadScrewLimitBot = Map.touchSensor.get("leadScrewLimitBot");
     }
+
+    public int inchesToTicks(double inches)
+    {
+        return (int) ((1440 / (Math.PI * 4)) * inches);
+    }
+
+    public void autoInit()
+    {
+        resetEncoders();
+        leftBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leadScrewMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        colorSensorRight.enableLed(true);
+        colorSensorLeft.enableLed(true);
+    }
+
+    public void moveInches(double inches, double power)
+    {
+        leftBackMotor.setTargetPosition(inchesToTicks(inches));
+        leftBackMotor.setPower(power);
+        rightBackMotor.setTargetPosition(inchesToTicks(inches));
+        rightBackMotor.setPower(power);
+        leftFrontMotor.setTargetPosition(inchesToTicks(inches));
+        leftFrontMotor.setPower(power);
+        rightFrontMotor.setTargetPosition(inchesToTicks(inches));
+        rightFrontMotor.setPower(power);
+    }
+
 
     void init()
     {
@@ -72,15 +108,6 @@ public class Definitions
         scoringArmReleaseServo.setPosition(0);
         ballStopServo.setPosition(0);
         armLatchServo.setPosition(0);
-    }
-
-    void encoderInit()
-    {
-        resetEncoders();
-        leftBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
 
