@@ -17,7 +17,7 @@ public class armTest extends LinearOpMode
     public void runOpMode() throws InterruptedException
     {
         robot.robotHardwareMapInit(hardwareMap);
-        robot.encoderInit();
+        robot.autoInit();
         robot.resetEncoders();
 
         waitForStart();

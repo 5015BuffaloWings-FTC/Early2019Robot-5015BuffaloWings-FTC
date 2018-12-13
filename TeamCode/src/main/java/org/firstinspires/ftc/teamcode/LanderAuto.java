@@ -41,7 +41,7 @@ public class LanderAuto extends LinearOpMode
             //}
             //else if(df.format(robot.colorSensorLeft))
 
-            //dropping
+
 
 
 
