@@ -27,6 +27,8 @@ public class LanderAuto extends LinearOpMode
             robot.leadScrewMotor.setTargetPosition(1234);//change up value
             robot.leadScrewMotor.setPower(1);
 
+            //getting off the
+
             //lining up to cubes
             robot.setDriveBackward();
             robot.moveInches(12, 0.5);
