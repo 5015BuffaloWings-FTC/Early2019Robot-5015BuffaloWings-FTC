@@ -62,7 +62,10 @@ public class BasicTeleOp extends LinearOpMode
     @Override
     public void runOpMode() throws InterruptedException
     {
-    	//ROBOT DRIVING SECTION
+    	/**
+		 * ROBOT DRIVING SECTION
+		 */
+
     	//Sets up robot
         robot.robotHardwareMapInit(hardwareMap);
 		robot.init();
@@ -98,7 +101,9 @@ public class BasicTeleOp extends LinearOpMode
 
 
 
-			//SCORING ARM SECTION
+			/**
+			 * SCORING ARM SECTION
+			 */
 			//Scoring arm - Speed control, Default 0.65, With Left_bumper: 0.85,
 			double scoringArmSlow;
 			if(gamepad2.left_bumper)
@@ -124,13 +129,10 @@ public class BasicTeleOp extends LinearOpMode
 			}
 
 
-
-
-
-
-
-//			//LEAD SCREW SECTION
-        	//if(robot.leadScrewMotor.getCurrentPosition())
+			/**
+			 *  LEAD SCREW SECTION
+			 */
+			//if(robot.leadScrewMotor.getCurrentPosition())
     		//{
                 //Lead Screw Motor - limits input from gamepad2 right joystick
             double leadScrewMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
@@ -153,7 +155,9 @@ public class BasicTeleOp extends LinearOpMode
 
 
 
-			//LEAD SCREW SECTION
+			/**
+			 * SERVO SECTION
+			 */
 			//Gamepad 2 button Y - releases the arm
 			if(gamepad2.y)
 			{

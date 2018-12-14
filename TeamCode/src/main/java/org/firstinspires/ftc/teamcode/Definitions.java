@@ -44,6 +44,7 @@ public class Definitions
 
     }
 
+
     public void robotHardwareMapInit(HardwareMap Map)
     {
         //Naming Scheme for configuring robot controller app
@@ -62,10 +63,6 @@ public class Definitions
         //leadScrewLimitBot = Map.touchSensor.get("leadScrewLimitBot");
     }
 
-    public int inchesToTicks(double inches)
-    {
-        return (int) ((1440 / (Math.PI * 4)) * inches);
-    }
 
     public void autoInit()
     {
@@ -79,6 +76,13 @@ public class Definitions
         colorSensorRight.enableLed(true);
         colorSensorLeft.enableLed(true);
     }
+
+
+    public int inchesToTicks(double inches)
+    {
+        return (int) ((1440 / (Math.PI * 4)) * inches);
+    }
+
 
     public void moveInches(double inches, double power)
     {
@@ -102,6 +106,7 @@ public class Definitions
          scoringArmMotor.setPower(0);
          leadScrewMotor.setPower(0);
     }
+
 
     void servoInit()
     {
@@ -128,6 +133,7 @@ public class Definitions
         rightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
+
     void setRot()
     {
         leftBackMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -135,6 +141,7 @@ public class Definitions
         rightBackMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
+
 
     void setStrafeLeft()
     {
@@ -144,6 +151,7 @@ public class Definitions
         rightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
+
     void setStrafeRight()
     {
         leftBackMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -151,6 +159,7 @@ public class Definitions
         rightBackMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
+
 
     void setPower(double power)
     {
@@ -160,6 +169,7 @@ public class Definitions
         rightFrontMotor.setPower(power);
     }
 
+
     void setPos(int pos)
     {
         leftBackMotor.setTargetPosition(pos);
@@ -167,6 +177,7 @@ public class Definitions
         rightBackMotor.setTargetPosition(pos);
         rightFrontMotor.setTargetPosition(pos);
     }
+
 
     void setRotPos(int pos)
     {
@@ -176,6 +187,7 @@ public class Definitions
         rightFrontMotor.setTargetPosition((pos*1120)/360);
     }
 
+
     void runPos()
     {
         leftBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -184,41 +196,13 @@ public class Definitions
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
+
     void resetEncoders()
     {
         leftBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
-    void moveInches(int direction, double power, int inchesToMove)
-    {
-        resetEncoders();
-        switch(direction)
-        {
-            case FORWARD:
-                setDriveForward();
-            case BACKWARD:
-                setDriveBackward();
-            case STRAFELEFT:
-                setStrafeLeft();
-            case STRAFERIGHT:
-                setStrafeRight();
-        }
-
-        setPos(inchesToMove);
-        setPower(power);
-        runPos();
-
-
-    }
-
-    void rotate(double power, int degreesToRoatate)
-    {
-        setRot();
-        setPower(power);
-        setRotPos(degreesToRoatate);
     }
 
 }
