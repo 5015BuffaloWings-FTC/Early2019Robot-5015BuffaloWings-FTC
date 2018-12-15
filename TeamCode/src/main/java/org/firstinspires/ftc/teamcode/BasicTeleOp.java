@@ -52,7 +52,6 @@ import com.qualcomm.robotcore.util.Range;
  *
  */
 
-
 @TeleOp(name = "Basic TeleOp v0.4", group = "Buffalo Wings")
 public class BasicTeleOp extends LinearOpMode
 {
@@ -69,6 +68,7 @@ public class BasicTeleOp extends LinearOpMode
     	//Sets up robot
         robot.robotHardwareMapInit(hardwareMap);
 		robot.init();
+		robot.resetEncoders();
         waitForStart();
 
         //This is what will run during the Remotely Operated mode
@@ -97,7 +97,8 @@ public class BasicTeleOp extends LinearOpMode
 			robot.rightBackMotor.setPower(driveBackRightPower);
 			robot.leftBackMotor.setPower(driveBackLeftPower);
 
-
+			double leadScrewMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
+			robot.leadScrewMotor.setPower(-leadScrewMotorPower);
 
 
 
@@ -129,18 +130,6 @@ public class BasicTeleOp extends LinearOpMode
 			}
 
 
-			/**
-			 *  LEAD SCREW SECTION
-			 */
-			//if(robot.leadScrewMotor.getCurrentPosition())
-    		//{
-                //Lead Screw Motor - limits input from gamepad2 right joystick
-            double leadScrewMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
-
-			    //Lead Screw Motor - Sets power to motor after being calculated
-            robot.leadScrewMotor.setPower(-leadScrewMotorPower);
-			//}
-
 
 
 
@@ -167,17 +156,17 @@ public class BasicTeleOp extends LinearOpMode
 			//Gamepad 2 button A - Latches the scoring arm into place
 			if(gamepad2.a)
 			{
-				robot.armLatchServo.setPosition(0.5);
+				robot.scoringArmLatchServo.setPosition(0.5);
 			}
 
 			//Gamepad 2 button B - Opens the scoring arm container
 			if(gamepad2.b)
 			{
-				robot.ballStopServo.setPosition(0.25);
+				robot.ballStopperServo.setPosition(0.25);
 			}
 			else
 			{
-				robot.ballStopServo.setPosition(0);
+				robot.ballStopperServo.setPosition(0);
 			}
 
 			if(gamepad2.x)

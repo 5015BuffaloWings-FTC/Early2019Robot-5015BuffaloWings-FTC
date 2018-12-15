@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 
 public class Definitions
@@ -30,10 +27,10 @@ public class Definitions
     DcMotor scoringArmMotor = null;
     DcMotor leadScrewMotor = null;
     Servo scoringArmReleaseServo = null;
-    Servo ballStopServo = null;
-    Servo armLatchServo = null;
-    ColorSensor colorSensorRight = null;
-    ColorSensor colorSensorLeft = null;
+    Servo ballStopperServo = null;
+    Servo scoringArmLatchServo = null;
+    ColorSensor rightColorSensor = null;
+    ColorSensor leftColorSensor = null;
     //TouchSensor leadScrewLimitTop;
     //TouchSensor leadScrewLimitBot;
 
@@ -54,18 +51,17 @@ public class Definitions
         rightFrontMotor = Map.dcMotor.get("rightFrontMotor");
         scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
         leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
-        scoringArmReleaseServo = Map.servo.get("armReleaseServo");
-        ballStopServo = Map.servo.get("ballStopperServo");
-        armLatchServo = Map.servo.get("latchServo");
-        colorSensorRight = Map.colorSensor.get("colorSensorRight");
-        colorSensorLeft = Map.colorSensor.get("colorSensorLeft");
+        scoringArmReleaseServo = Map.servo.get("scoringArmReleaseServo");
+        ballStopperServo = Map.servo.get("ballStopperServo");
+        scoringArmLatchServo = Map.servo.get("scoringArmLatchServo");
+        rightColorSensor = Map.colorSensor.get("rightColorSensor");
+        leftColorSensor = Map.colorSensor.get("leftColorSensor");
         //leadScrewLimitTop = Map.touchSensor.get("leadScrewLimitTop");
         //leadScrewLimitBot = Map.touchSensor.get("leadScrewLimitBot");
     }
 
 
-    public void autoInit()
-    {
+    public void autoInit() {
         resetEncoders();
         leftBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -73,8 +69,8 @@ public class Definitions
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leadScrewMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        colorSensorRight.enableLed(true);
-        colorSensorLeft.enableLed(true);
+        rightColorSensor.enableLed(true);
+        leftColorSensor.enableLed(true);
     }
 
 
@@ -111,8 +107,8 @@ public class Definitions
     void servoInit()
     {
         scoringArmReleaseServo.setPosition(0);
-        ballStopServo.setPosition(0);
-        armLatchServo.setPosition(0);
+        ballStopperServo.setPosition(0);
+        scoringArmLatchServo.setPosition(0);
     }
 
 
