@@ -60,6 +60,19 @@ public class Definitions
         //leadScrewLimitBot = Map.touchSensor.get("leadScrewLimitBot");
     }
 
+    public void testHardwareMapInit(HardwareMap Map)
+    {
+        //Naming Scheme for configuring robot controller app
+        leftBackMotor = Map.dcMotor.get("leftBackMotor");
+        leftFrontMotor = Map.dcMotor.get("leftFrontMotor");
+        rightBackMotor = Map.dcMotor.get("rightBackMotor");
+        rightFrontMotor = Map.dcMotor.get("rightFrontMotor");
+        scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
+        leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
+        ballStopperServo = Map.servo.get("ballStopperServo");
+        scoringArmLatchServo = Map.servo.get("scoringArmLatchServo");
+    }
+
 
     public void autoInit() {
         resetEncoders();
