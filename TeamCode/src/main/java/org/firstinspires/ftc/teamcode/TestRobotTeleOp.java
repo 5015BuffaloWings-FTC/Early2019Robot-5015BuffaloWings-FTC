@@ -16,7 +16,7 @@ public class TestRobotTeleOp extends LinearOpMode
     @Override
     public void runOpMode() throws InterruptedException
     {
-        robot.init();
+        robot.teleOpInit();
         robot.testHardwareMapInit(hardwareMap);
 
         waitForStart();

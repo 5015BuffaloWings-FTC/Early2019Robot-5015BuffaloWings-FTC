@@ -105,6 +105,34 @@ public class Definitions
         rightFrontMotor.setPower(power);
     }
 
+    public void moveInches(int direction, double inches, double power)
+    {
+        switch(direction)
+        {
+            case FORWARD:
+                setDriveForward();
+                moveInches(inches, power);
+            case BACKWARD:
+                setDriveBackward();
+                moveInches(inches, power);
+            case STRAFELEFT:
+                setStrafeLeft();
+                moveInches(inches, power);
+            case STRAFERIGHT:
+                setStrafeRight();
+                moveInches(inches, power);
+            default:
+                break;
+        }
+    }
+
+    public void teleOpInit()
+    {
+        init();
+        servoInit();
+        resetEncoders();
+    }
+
 
     void init()
     {

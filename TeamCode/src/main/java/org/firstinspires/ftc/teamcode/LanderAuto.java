@@ -28,13 +28,17 @@ public class LanderAuto extends LinearOpMode
             switch(i)
             {
                 case 1:
-                    robot.setDriveBackward();
-                    robot.moveInches(12,0.5);
-                    break;
+                    robot.moveInches(robot.BACKWARD, 12, 0.5);
+                    //robot.setDriveBackward();
+                    //robot.moveInches(12,0.5);
+                    //break;
 
                 case 2:
-                    robot.setStrafeRight();
-                    robot.moveInches(12, 0.5);
+                    robot.moveInches(robot.STRAFERIGHT, 12, 0.5);
+                    //robot.setStrafeRight();
+                    //robot.moveInches(12, 0.5);
+                default:
+                    break;
             }
 
 
