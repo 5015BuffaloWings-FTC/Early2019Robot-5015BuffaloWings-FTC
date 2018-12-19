@@ -26,12 +26,8 @@ public class ExampleAuto extends LinearOpMode
 
 		while(opModeIsActive())
 		{
-		    time = runTime.milliseconds();
-		    robot.leadScrewMotor.setPower(1);
-			if(time >= 9000)
-            {
-                robot.leadScrewMotor.setPower(0);
-            }
+			robot.setDriveForward();
+		    robot.moveInches(robot.FORWARD, 6, 0.5);
 
 
 		}

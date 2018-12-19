@@ -149,7 +149,7 @@ public class Definitions
     {
         scoringArmReleaseServo.setPosition(0);
         ballStopperServo.setPosition(0);
-        scoringArmLatchServo.setPosition(0);
+        scoringArmLatchServo.setPosition(1);
     }
 
 

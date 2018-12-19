@@ -33,20 +33,26 @@ import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
-@TeleOp(name="GoldAlign Example", group="DogeCV")
+@Autonomous(name="GoldAlign Example", group="DogeCV")
 
 public class GoldAlignExample extends OpMode
 {
     // Detector object
     private GoldAlignDetector detector;
-
+    Definitions robot = new Definitions();
+    ElapsedTime runTime = new ElapsedTime();
 
     @Override
     public void init() {
+        robot.robotHardwareMapInit(hardwareMap);
         telemetry.addData("Status", "DogeCV 2018.0 - Gold Align Example");
 
         // Set up detector
@@ -82,7 +88,8 @@ public class GoldAlignExample extends OpMode
      * Code to run ONCE when the driver hits PLAY
      */
     @Override
-    public void start() {
+    public void start()
+    {
 
     }
 
@@ -90,7 +97,15 @@ public class GoldAlignExample extends OpMode
      * Code to run REPEATEDLY when the driver hits PLAY
      */
     @Override
-    public void loop() {
+    public void loop()
+    {
+        if(detector.getAligned())
+        {
+
+            robot.setDriveForward();
+            robot.moveInches(12, 1);
+        }
+
         telemetry.addData("IsAligned" , detector.getAligned()); // Is the bot aligned with the gold mineral?
         telemetry.addData("X Pos" , detector.getXPosition()); // Gold X position.
     }

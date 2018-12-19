@@ -15,7 +15,8 @@ import com.qualcomm.robotcore.util.Range;
  * @version 12-5-18
  */
 
-/* Controls:
+/**
+ *Controls:
  * Start A - Controls wheels
  * Start B - Controls scoring arm and lead screw
  *
@@ -96,8 +97,10 @@ public class BasicTeleOp extends LinearOpMode
 			robot.rightBackMotor.setPower(driveBackRightPower);
 			robot.leftBackMotor.setPower(driveBackLeftPower);
 
+
 			double leadScrewMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
 			robot.leadScrewMotor.setPower(-leadScrewMotorPower);
+
 
 
 
@@ -155,7 +158,7 @@ public class BasicTeleOp extends LinearOpMode
 			//Gamepad 2 button A - Latches the scoring arm into place
 			if(gamepad2.a)
 			{
-				robot.scoringArmLatchServo.setPosition(0.5);
+				robot.scoringArmLatchServo.setPosition(0.65);
 			}
 
 			//Gamepad 2 button B - Opens the scoring arm container
