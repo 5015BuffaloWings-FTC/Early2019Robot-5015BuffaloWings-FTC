@@ -86,6 +86,32 @@ public class Definitions
         leftColorSensor.enableLed(true);
     }
 
+    public void cubeLeft()
+    {
+
+    }
+
+    public void cubeRight()
+    {
+
+    }
+
+    public void cubeCenter()
+    {
+
+    }
+
+    public void unLatch()
+    {
+         leadScrewMotor.setTargetPosition(6000);
+         leadScrewMotor.setPower(-1);
+
+         if(!leadScrewMotor.isBusy())
+         {
+             setStrafeLeft();
+             moveInches(6, 0.5);
+         }
+    }
 
     public int inchesToTicks(double inches)
     {

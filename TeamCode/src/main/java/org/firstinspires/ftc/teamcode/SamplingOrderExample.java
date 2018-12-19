@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
+import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldDetector;
 import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
 import com.disnodeteam.dogecv.filters.HSVColorFilter;
@@ -15,7 +16,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class SamplingOrderExample extends OpMode {
     // Detector object
+    // Detector object
     private SamplingOrderDetector detector;
+    Definitions robot = new Definitions();
+    ElapsedTime runTime = new ElapsedTime();
 
 
     @Override
@@ -61,6 +65,29 @@ public class SamplingOrderExample extends OpMode {
      */
     @Override
     public void loop() {
+        robot.unLatch();
+
+//        switch(detector.getCurrentOrder().toString())
+//        {
+//            case "LEFT":
+//                cubeLeft();
+//                break;
+//
+//            case "RIGHT":
+//                cubeRight();
+//                break;
+//
+//            case "CENTER":
+//                //cubeCenter();
+//                break;
+//
+//            default:
+//
+//                break;
+//
+//
+//        }
+
         telemetry.addData("Current Order" , detector.getCurrentOrder().toString()); // The current result for the frame
         telemetry.addData("Last Order" , detector.getLastOrder().toString()); // The last known result
     }
