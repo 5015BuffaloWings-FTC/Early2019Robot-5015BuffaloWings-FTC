@@ -68,8 +68,8 @@ public class BasicTeleOp extends LinearOpMode
 
     	//Sets up robot
         robot.robotHardwareMapInit(hardwareMap);
-        robot.setDriveForward();
 		robot.teleOpInit();
+		robot.setDriveForward();
         waitForStart();
 
         //This is what will run during the Remotely Operated mode
