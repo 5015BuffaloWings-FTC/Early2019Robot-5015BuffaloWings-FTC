@@ -156,16 +156,15 @@ public class Definitions
     {
         init();
         servoInit();
-        resetEncoders();
     }
 
 
     void init()
     {
-         leftFrontMotor.setPower(0);
-         leftBackMotor.setPower(0);
-         rightFrontMotor.setPower(0);
-         rightBackMotor.setPower(0);
+         leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+         leftBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+         rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+         rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
          scoringArmMotor.setPower(0);
          leadScrewMotor.setPower(0);
     }
