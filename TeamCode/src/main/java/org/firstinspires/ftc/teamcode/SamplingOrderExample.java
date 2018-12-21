@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Sampling Order Example", group="DogeCV")
+@Autonomous(name="SamplingAuto", group="DogeCV")
 
 public class SamplingOrderExample extends OpMode {
     // Detector object
