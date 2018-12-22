@@ -6,7 +6,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.configuration.annotations.DigitalIoDeviceType;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorDigitalTouch;
 
 
 public class Definitions
@@ -31,7 +34,7 @@ public class Definitions
     Servo ballStopperServo = null;
     Servo scoringArmLatchServo = null;
     //TouchSensor leadScrewLimitTop = null;
-    TouchSensor leadScrewLimitBot = null;
+    //TouchSensor leadScrewLimitBot = null;
 
     //Constructor to initialize variables
 
@@ -39,7 +42,6 @@ public class Definitions
     {
 
     }
-
 
     public void robotHardwareMapInit(HardwareMap Map)
     {
@@ -53,7 +55,6 @@ public class Definitions
         scoringArmReleaseServo = Map.servo.get("scoringArmReleaseServo");
         ballStopperServo = Map.servo.get("ballStopperServo");
         scoringArmLatchServo = Map.servo.get("scoringArmLatchServo");
-        leadScrewLimitBot = Map.touchSensor.get("bottomLeadScrewSensor");
     }
 
     public void testHardwareMapInit(HardwareMap Map)

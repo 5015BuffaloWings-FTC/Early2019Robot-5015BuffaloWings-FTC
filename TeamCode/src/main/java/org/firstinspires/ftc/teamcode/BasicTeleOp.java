@@ -3,14 +3,16 @@ package org.firstinspires.ftc.teamcode;
 //These are need to have the app run the code properly
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 //Needed to alter inputs from joysticks. The .clip() method/function is what we use most
 import com.qualcomm.robotcore.util.Range;
 
 /**
  * @author Noah Zulick
- * @author Sam Cartered
+ * @author Sam Carter
  *
  * @version 12-5-18
  */
@@ -58,6 +60,7 @@ public class BasicTeleOp extends LinearOpMode
 {
     private Definitions robot = new Definitions();
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
+	DigitalChannel leadScrewLimitBot;
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -69,6 +72,9 @@ public class BasicTeleOp extends LinearOpMode
     	//Sets up robot
         robot.robotHardwareMapInit(hardwareMap);
 		robot.teleOpInit();
+		leadScrewLimitBot = hardwareMap.get(DigitalChannel.class, "leadScrewLimitBot");
+		leadScrewLimitBot.setMode(DigitalChannel.Mode.INPUT);
+
         waitForStart();
 
         //This is what will run during the Remotely Operated mode
@@ -101,7 +107,6 @@ public class BasicTeleOp extends LinearOpMode
 			robot.rightBackMotor.setPower(driveBackRightPower);
 			robot.leftBackMotor.setPower(driveBackLeftPower);
 
-
 			telemetry.addData("stick input", gamepad1.left_stick_y);
 			telemetry.addData("power", robot.leftBackMotor.getPower());
 
@@ -110,10 +115,14 @@ public class BasicTeleOp extends LinearOpMode
 			 * LEADSCREW SECTION
 			 */
 			double leadScrewMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
-			if(robot.leadScrewLimitBot.isPressed())
-				robot.leadScrewMotor.setPower(1);
+			if(!leadScrewLimitBot.getState())
+				robot.leadScrewMotor.setPower(0.5);
 			else
 				robot.leadScrewMotor.setPower(-leadScrewMotorPower);
+
+			//telemetry.addData("Pressed?", robot.leadScrewLimitBot.isPressed());
+			telemetry.addData("Power to LeadScrew", leadScrewMotorPower);
+			telemetry.update();
 
 
 
@@ -176,7 +185,6 @@ public class BasicTeleOp extends LinearOpMode
 			{
 				//code
 			}
-
 		}
     }
 }
