@@ -7,6 +7,7 @@ import com.disnodeteam.dogecv.detectors.roverrukus.GoldDetector;
 import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
 import com.disnodeteam.dogecv.filters.HSVColorFilter;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -17,10 +18,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class SamplingOrderExample extends OpMode {
     // Detector object
     private SamplingOrderDetector detector;
+    Definitions robot = new Definitions();
+    ElapsedTime runTime = new ElapsedTime();
+
 
 
     @Override
     public void init() {
+        robot.robotHardwareMapInit(hardwareMap);
+        robot.autoInit();
+
+
         telemetry.addData("Status", "DogeCV 2018.0 - Sampling Order Example");
 
         // Setup detector
@@ -61,7 +69,13 @@ public class SamplingOrderExample extends OpMode {
      * Code to run REPEATEDLY when the driver hits PLAY
      */
     @Override
-    public void loop() {
+    public void loop()
+    {
+        robot.land();
+        robot.waitWhileRobotBusy();
+        robot.moveInches(robot.FORWARD, 5, 0.5);
+
+        telemetry.addData("Lead Screw", robot.leadScrewMotor.getCurrentPosition());
         telemetry.addData("Current Order" , detector.getCurrentOrder().toString()); // The current result for the frame
         telemetry.addData("Last Order" , detector.getLastOrder().toString()); // The last known result
     }

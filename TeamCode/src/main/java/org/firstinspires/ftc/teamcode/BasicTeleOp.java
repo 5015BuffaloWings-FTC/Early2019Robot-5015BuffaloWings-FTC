@@ -69,7 +69,6 @@ public class BasicTeleOp extends LinearOpMode
     	//Sets up robot
         robot.robotHardwareMapInit(hardwareMap);
 		robot.teleOpInit();
-		robot.setDriveForward();
         waitForStart();
 
         //This is what will run during the Remotely Operated mode
@@ -92,16 +91,12 @@ public class BasicTeleOp extends LinearOpMode
 			double driveBackRightPower = Range.clip((-gamepad1.left_stick_y + (gamepad1.left_stick_x) - gamepad1.right_stick_x) * slowMovement, -1, 1);
 			double driveBackLeftPower = Range.clip((gamepad1.left_stick_y + (gamepad1.left_stick_x) - gamepad1.right_stick_x) * slowMovement, -1, 1);
 
-			// Apply the values to the motors.
-//			robot.rightFrontMotor.setPower(driveFrontRightPower);
-//			robot.leftFrontMotor.setPower(driveFrontLeftPower);
-//			robot.rightBackMotor.setPower(driveBackRightPower);
-//			robot.leftBackMotor.setPower(driveBackLeftPower);
+			 //Apply the values to the motors.
+			robot.rightFrontMotor.setPower(driveFrontRightPower);
+			robot.leftFrontMotor.setPower(driveFrontLeftPower);
+			robot.rightBackMotor.setPower(driveBackRightPower);
+			robot.leftBackMotor.setPower(driveBackLeftPower);
 
-
-			robot.leftBackMotor.setPower(1);  //Test this line to see if this is different from setting each motor individually.
-								//If it doesn't work, this isn't the problem.  If it does, the problem is with
-								//setting the power individually.
 
 			telemetry.addData("stick input", gamepad1.left_stick_y);
 			telemetry.addData("power", robot.leftBackMotor.getPower());
