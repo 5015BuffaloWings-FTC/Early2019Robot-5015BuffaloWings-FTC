@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -29,10 +30,8 @@ public class Definitions
     Servo scoringArmReleaseServo = null;
     Servo ballStopperServo = null;
     Servo scoringArmLatchServo = null;
-    ColorSensor rightColorSensor = null;
-    ColorSensor leftColorSensor = null;
-    //TouchSensor leadScrewLimitTop;
-    //TouchSensor leadScrewLimitBot;
+    //TouchSensor leadScrewLimitTop = null;
+    TouchSensor leadScrewLimitBot = null;
 
     //Constructor to initialize variables
 
@@ -54,8 +53,7 @@ public class Definitions
         scoringArmReleaseServo = Map.servo.get("scoringArmReleaseServo");
         ballStopperServo = Map.servo.get("ballStopperServo");
         scoringArmLatchServo = Map.servo.get("scoringArmLatchServo");
-        rightColorSensor = Map.colorSensor.get("rightColorSensor");
-        leftColorSensor = Map.colorSensor.get("leftColorSensor");
+        leadScrewLimitBot = Map.touchSensor.get("bottomLeadScrewSensor");
     }
 
     public void testHardwareMapInit(HardwareMap Map)

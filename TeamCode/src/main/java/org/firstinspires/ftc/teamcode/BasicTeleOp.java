@@ -74,6 +74,10 @@ public class BasicTeleOp extends LinearOpMode
         //This is what will run during the Remotely Operated mode
         while(opModeIsActive())
 		{
+
+			/**
+			 * DRIVING SECTION
+			 */
 			//slow is used as a multiplier to change speed
 			double slowMovement;
 			if(gamepad1.right_bumper)
@@ -102,10 +106,14 @@ public class BasicTeleOp extends LinearOpMode
 			telemetry.addData("power", robot.leftBackMotor.getPower());
 
 
-
-
+			/**
+			 * LEADSCREW SECTION
+			 */
 			double leadScrewMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
-			robot.leadScrewMotor.setPower(-leadScrewMotorPower);
+			if(robot.leadScrewLimitBot.isPressed())
+				robot.leadScrewMotor.setPower(1);
+			else
+				robot.leadScrewMotor.setPower(-leadScrewMotorPower);
 
 
 
@@ -121,7 +129,7 @@ public class BasicTeleOp extends LinearOpMode
 			}
 			else
 			{
-				scoringArmSlow = 0.65;
+				scoringArmSlow = 0.85;
 			}
 
 			//Scoring arm - controls input from gamepad2 left joystick
@@ -136,19 +144,6 @@ public class BasicTeleOp extends LinearOpMode
 			{
 				robot.scoringArmMotor.setPower(scoringArmMotorPower * scoringArmSlow);
 			}
-
-
-
-
-
-
-			//We added this line of telemetry because the robot arm is not strong enough at
-			// 0 power to hold the arm up...
-			//So we are going to find what power the arm needs to be at in order to
-			//hold the arm steady.
-			telemetry.addLine("Values\n")
-					.addData("lead screw value: ", robot.leadScrewMotor.getCurrentPosition());
-			telemetry.update();
 
 
 
