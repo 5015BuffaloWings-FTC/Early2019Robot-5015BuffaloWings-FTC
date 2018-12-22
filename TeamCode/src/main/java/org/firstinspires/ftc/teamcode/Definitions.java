@@ -14,10 +14,6 @@ import org.firstinspires.ftc.robotcontroller.external.samples.SensorDigitalTouch
 
 public class Definitions
 {
-
-    ElapsedTime runtime = new ElapsedTime(); // Defines the Up Time of the program
-
-
     public final int FORWARD = 0;
     public final int BACKWARD = 1;
     public final int STRAFELEFT = 2;
@@ -33,10 +29,6 @@ public class Definitions
     Servo scoringArmReleaseServo = null;
     Servo ballStopperServo = null;
     Servo scoringArmLatchServo = null;
-    //TouchSensor leadScrewLimitTop = null;
-    //TouchSensor leadScrewLimitBot = null;
-
-    //Constructor to initialize variables
 
     public Definitions()
     {
@@ -86,7 +78,8 @@ public class Definitions
         servoInit();
     }
 
-    public void autoInit() {
+    public void autoInit()
+    {
         resetEncoders();
         leftBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -96,12 +89,6 @@ public class Definitions
         servoInit();
     }
 
-    public void land()
-    {
-         leadScrewMotor.setTargetPosition(6000);
-         leadScrewMotor.setPower(-1);
-    }
-
     public int inchesToTicks(double inches)
     {
         return (int) ((1440 / (Math.PI * 4)) * inches);
@@ -109,7 +96,8 @@ public class Definitions
 
 
     //Used For
-    public void moveInches(int direction, double inches, double power) {
+    public void moveInches(int direction, double inches, double power)
+    {
         switch (direction) {
             case FORWARD: //Forward
                 setDriveForward();
@@ -147,6 +135,15 @@ public class Definitions
         rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leadScrewMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    boolean isRobotBusy()
+    {
+        if(leftBackMotor.isBusy() || leftFrontMotor.isBusy() || rightFrontMotor.isBusy() ||
+                rightBackMotor.isBusy() || leadScrewMotor.isBusy())
+            return true;
+        else
+            return false;
     }
 
     void setPower(double power)
