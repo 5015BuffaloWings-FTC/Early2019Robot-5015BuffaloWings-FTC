@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="SamplingAuto", group="DogeCV")
+@Autonomous(name="SamplingAutoExample", group="DogeCV")
 
 public class SamplingOrderExample extends OpMode {
     // Detector object
@@ -72,7 +72,6 @@ public class SamplingOrderExample extends OpMode {
     public void loop()
     {
         robot.land();
-        robot.waitWhileRobotBusy();
         robot.moveInches(robot.FORWARD, 5, 0.5);
 
         telemetry.addData("Lead Screw", robot.leadScrewMotor.getCurrentPosition());
