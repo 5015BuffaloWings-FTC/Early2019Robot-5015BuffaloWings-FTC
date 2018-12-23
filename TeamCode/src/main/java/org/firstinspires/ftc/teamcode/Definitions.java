@@ -89,9 +89,17 @@ public class Definitions
         servoInit();
     }
 
+    void runWithOutEncoders()
+    {
+        leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
     public int inchesToTicks(double inches)
     {
-        return (int) ((1440 / (Math.PI * 4)) * inches);
+        return (int) ((1120 / (Math.PI * 4)) * inches);
     }
 
 
@@ -186,4 +194,19 @@ public class Definitions
         rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
+    void setRotateRight()
+    {
+        leftBackMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightBackMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+    }
+
+    void setRotateLeft()
+    {
+        leftBackMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightBackMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+    }
 }

@@ -3,32 +3,33 @@
 
 package org.firstinspires.ftc.teamcode;
 
-        import com.disnodeteam.dogecv.CameraViewDisplay;
-        import com.disnodeteam.dogecv.DogeCV;
-        import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
-        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-        import com.qualcomm.robotcore.hardware.DcMotor;
-        import com.qualcomm.robotcore.hardware.DigitalChannel;
-        import com.qualcomm.robotcore.util.ElapsedTime;
+import com.disnodeteam.dogecv.CameraViewDisplay;
+import com.disnodeteam.dogecv.DogeCV;
+import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="CraterAuto")
 
 public class CraterAuto extends LinearOpMode
 {
     // Detector object
-    private SamplingOrderDetector detector;
+    private GoldAlignDetector detector;
     Definitions robot = new Definitions();
     DigitalChannel leadScrewLimitBot;
-    int i = 0;
+
+    double rotation;
 
     boolean landing = true;
-    boolean sampling = false;
-    boolean wallKiss = false;
+    boolean rotateToLeftSilver = false;
+    boolean scanRight = false;
+    boolean kissCube = false;
 
     @Override
-    public void runOpMode()
-    {
+    public void runOpMode() {
         leadScrewLimitBot = hardwareMap.get(DigitalChannel.class, "leadScrewLimitBot");
         leadScrewLimitBot.setMode(DigitalChannel.Mode.INPUT);
 
@@ -38,7 +39,7 @@ public class CraterAuto extends LinearOpMode
         telemetry.addData("Status", "DogeCV 2018.0 - Sampling Order Example");
 
         // Setup detector
-        detector = new SamplingOrderDetector(); // Create the detector
+        detector = new GoldAlignDetector(); // Create the detector
         detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize detector with app context and camera
         detector.useDefaults(); // Set detector to use default settings
 
@@ -55,10 +56,8 @@ public class CraterAuto extends LinearOpMode
         detector.enable(); // Start detector
 
 
-
         robot.leadScrewMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        while(leadScrewLimitBot.getState())
-        {
+        while (leadScrewLimitBot.getState()) {
             robot.leadScrewMotor.setPower(-0.75);
         }
         robot.leadScrewMotor.setPower(0);
@@ -68,59 +67,60 @@ public class CraterAuto extends LinearOpMode
         waitForStart();
 
 
-        while(opModeIsActive())
+        while (opModeIsActive())
         {
-            if(landing)
-            {
+            if(landing) {
                 robot.leadScrewMotor.setTargetPosition(6000);
                 robot.leadScrewMotor.setPower(-1);
-                if(robot.leadScrewMotor.getCurrentPosition() == 6000)
-                {
+                if (robot.leadScrewMotor.getCurrentPosition() == 6000 && !robot.leadScrewMotor.isBusy()) {
                     landing = false;
-                    sampling = true;
+                    rotateToLeftSilver = true;
                 }
             }
-            if(sampling)
+
+            if(rotateToLeftSilver)
             {
-                switch(detector.getCurrentOrder())
+                robot.setRotateLeft();
+                robot.moveInches(6,0.5);
+                if(!robot.isRobotBusy())
                 {
-                    case RIGHT:
-                        robot.cubeRight();
-                        break;
-                    case LEFT:
-                        robot.cubeLeft();
-                        break;
-                    case CENTER:
-                        robot.cubeCenter();
-                        break;
-                    case UNKNOWN:
-                        break;
-                    default:
-                        break;
-                }
-                if(robot.leadScrewMotor.getCurrentPosition() == 3000)
-                {
-                    sampling = false;
-                    wallKiss = true;
+                    rotateToLeftSilver = false;
+                    scanRight = true;
                 }
             }
 
-            if(wallKiss)
+            if(scanRight)
             {
-                robot.leadScrewMotor.setTargetPosition(6000);
-                robot.leadScrewMotor.setPower(-1);
-                if(robot.leadScrewMotor.getCurrentPosition() == 6000)
-                    wallKiss = true;
+                robot.setRotateRight();
+                robot.resetEncoders();
+                robot.runWithOutEncoders();
+                while(!detector.getAligned())
+                {
+                    robot.setPower(0.5);
+                }
+                if(!robot.isRobotBusy())
+                {
+                    scanRight = false;
+                    kissCube = true;
+                }
+            }
 
+            if(kissCube)
+            {
+                robot.moveInches(robot.FORWARD,12,0.5);
+                if(!robot.isRobotBusy())
+                {
+                    kissCube = false;
+                }
             }
 
 
-            telemetry.addData("Current Order", detector.getCurrentOrder().toString()); // The current result for the frame
-            telemetry.addData("Last Order", detector.getLastOrder().toString()); // The last known result
+
+            telemetry.addData("IsAligned" , detector.getAligned()); // Is the bot aligned with the gold mineral?
+            telemetry.addData("X Pos" , detector.getXPosition());
             telemetry.update();
         }
 
         detector.disable();
     }
-
 }
