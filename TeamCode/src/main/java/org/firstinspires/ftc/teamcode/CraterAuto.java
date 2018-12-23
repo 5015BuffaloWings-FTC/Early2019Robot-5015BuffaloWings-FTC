@@ -1,3 +1,6 @@
+//Sat Dec 22, Software: Clean up code, added limit switc h.
+//Sat Dec 22, Hardware: Added limit
+
 package org.firstinspires.ftc.teamcode;
 
         import com.disnodeteam.dogecv.CameraViewDisplay;
@@ -54,18 +57,34 @@ public class CraterAuto extends LinearOpMode
         //do it with switch
 
 
+
+        robot.leadScrewMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        while(leadScrewLimitBot.getState())
+        {
+            robot.leadScrewMotor.setPower(-0.75);
+        }
+        robot.leadScrewMotor.setPower(0);
+        robot.resetEncoders();
+
         waitForStart();
+
 
         while(opModeIsActive())
         {
-            robot.leadScrewMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            while(leadScrewLimitBot.getState())
+            if(!robot.isRobotBusy())
             {
-                robot.leadScrewMotor.setPower(-1);
+                i++;
             }
-                robot.leadScrewMotor.setPower(0);
 
-
+            switch(i)
+            {
+                case 0:
+                    robot.leadScrewMotor.setTargetPosition(6000);
+                    robot.leadScrewMotor.setPower(-1);
+                    break;
+                default:
+                    break;
+            }
 
             telemetry.addData("LeadScrewLimitBot pressed?", leadScrewLimitBot.getState());
             telemetry.addData("Lead Screw", robot.leadScrewMotor.getCurrentPosition());
