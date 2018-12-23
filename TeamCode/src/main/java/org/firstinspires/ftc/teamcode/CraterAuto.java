@@ -19,13 +19,12 @@ public class CraterAuto extends LinearOpMode
     // Detector object
     private SamplingOrderDetector detector;
     Definitions robot = new Definitions();
-    ElapsedTime runTime = new ElapsedTime();
     DigitalChannel leadScrewLimitBot;
     int i = 0;
 
-    final int LANDING = 0;
-    final int SAMPLING = 1;
-
+    boolean landing = true;
+    boolean sampling = false;
+    boolean wallKiss = false;
 
     @Override
     public void runOpMode()
@@ -54,7 +53,6 @@ public class CraterAuto extends LinearOpMode
         detector.ratioScorer.perfectRatio = 1.0;
 
         detector.enable(); // Start detector
-        //do it with switch
 
 
 
@@ -65,29 +63,44 @@ public class CraterAuto extends LinearOpMode
         }
         robot.leadScrewMotor.setPower(0);
         robot.resetEncoders();
+        robot.autoInit();
 
         waitForStart();
 
 
         while(opModeIsActive())
         {
-            if(!robot.isRobotBusy())
+            if(landing)
             {
-                i++;
+                robot.leadScrewMotor.setTargetPosition(6000);
+                robot.leadScrewMotor.setPower(-1);
+                if(robot.leadScrewMotor.getCurrentPosition() == 6000)
+                {
+                    landing = false;
+                    sampling = true;
+                }
+            }
+            if(sampling)
+            {
+                robot.leadScrewMotor.setTargetPosition(3000);
+                robot.leadScrewMotor.setPower(1);
+                if(robot.leadScrewMotor.getCurrentPosition() == 3000)
+                {
+                    sampling = false;
+                    wallKiss = true;
+                }
             }
 
-            switch(i)
+            if(wallKiss)
             {
-                case 0:
-                    robot.leadScrewMotor.setTargetPosition(6000);
-                    robot.leadScrewMotor.setPower(-1);
-                    break;
-                default:
-                    break;
+                robot.leadScrewMotor.setTargetPosition(6000);
+                robot.leadScrewMotor.setPower(-1);
+                if(robot.leadScrewMotor.getCurrentPosition() == 6000)
+                    wallKiss = true;
+
             }
 
-            telemetry.addData("LeadScrewLimitBot pressed?", leadScrewLimitBot.getState());
-            telemetry.addData("Lead Screw", robot.leadScrewMotor.getCurrentPosition());
+
             telemetry.addData("Current Order", detector.getCurrentOrder().toString()); // The current result for the frame
             telemetry.addData("Last Order", detector.getLastOrder().toString()); // The last known result
             telemetry.update();
