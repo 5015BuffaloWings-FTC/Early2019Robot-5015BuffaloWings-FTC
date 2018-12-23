@@ -82,8 +82,22 @@ public class CraterAuto extends LinearOpMode
             }
             if(sampling)
             {
-                robot.leadScrewMotor.setTargetPosition(3000);
-                robot.leadScrewMotor.setPower(1);
+                switch(detector.getCurrentOrder())
+                {
+                    case RIGHT:
+                        robot.cubeRight();
+                        break;
+                    case LEFT:
+                        robot.cubeLeft();
+                        break;
+                    case CENTER:
+                        robot.cubeCenter();
+                        break;
+                    case UNKNOWN:
+                        break;
+                    default:
+                        break;
+                }
                 if(robot.leadScrewMotor.getCurrentPosition() == 3000)
                 {
                     sampling = false;
