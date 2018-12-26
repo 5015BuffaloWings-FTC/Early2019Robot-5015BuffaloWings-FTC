@@ -56,10 +56,6 @@ public class Definitions
         leftFrontMotor = Map.dcMotor.get("leftFrontMotor");
         rightBackMotor = Map.dcMotor.get("rightBackMotor");
         rightFrontMotor = Map.dcMotor.get("rightFrontMotor");
-        scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
-        leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
-        ballStopperServo = Map.servo.get("ballStopperServo");
-        scoringArmLatchServo = Map.servo.get("scoringArmLatchServo");
     }
 
     void servoInit()
@@ -69,18 +65,6 @@ public class Definitions
         scoringArmLatchServo.setPosition(1);
     }
 
-    public void teleOpInit()
-    {
-        runWithOutEncoders();
-        servoInit();
-    }
-
-    public void autoInit()
-    {
-        resetEncoders();
-        runWithEncoders();
-        servoInit();
-    }
 
     void runWithOutEncoders()
     {
@@ -88,15 +72,6 @@ public class Definitions
         leftBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-    }
-
-    void runWithEncoders()
-    {
-        leftBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leadScrewMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public int inchesToTicks(double inches)
@@ -109,8 +84,7 @@ public class Definitions
     public void moveInches(int direction, double inches, double power)
     {
 
-        //resetEncoders();
-        runWithEncoders();
+        resetEncoders();
 
         switch (direction)
         {
@@ -137,6 +111,7 @@ public class Definitions
 
     public void moveInches(double inches, double power)
     {
+        resetEncoders();
         leftBackMotor.setTargetPosition(inchesToTicks(inches));
         leftBackMotor.setPower(power);
         rightBackMotor.setTargetPosition(inchesToTicks(inches));
@@ -153,16 +128,13 @@ public class Definitions
         leftFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leadScrewMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
+        //leadScrewMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-    boolean isRobotBusy()
-    {
-        if(leftBackMotor.isBusy() || leftFrontMotor.isBusy() || rightFrontMotor.isBusy() ||
-                rightBackMotor.isBusy() || leadScrewMotor.isBusy())
-            return true;
-        else
-            return false;
+        leftBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //leadScrewMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     void setPower(double power)
@@ -193,16 +165,16 @@ public class Definitions
     {
         leftBackMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightBackMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightBackMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     void setStrafeRight()
     {
         leftBackMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightBackMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightBackMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     void setRotateRight()

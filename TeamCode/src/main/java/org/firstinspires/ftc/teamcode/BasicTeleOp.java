@@ -72,7 +72,8 @@ public class BasicTeleOp extends LinearOpMode //change to OP mode
 
     	//Sets up robot
         robot.robotHardwareMapInit(hardwareMap);
-		robot.teleOpInit();
+		robot.resetEncoders();
+		robot.servoInit();
 		leadScrewLimitBot = hardwareMap.get(DigitalChannel.class, "leadScrewLimitBot");
 		leadScrewLimitBot.setMode(DigitalChannel.Mode.INPUT);
 

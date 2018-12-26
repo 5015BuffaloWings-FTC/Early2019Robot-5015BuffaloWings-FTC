@@ -12,14 +12,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="CraterAuto")
+@Autonomous(name="TestAuto")
 
-public class CraterAuto extends LinearOpMode
+public class TestAuto extends LinearOpMode
 {
     // Detector object
     private GoldAlignDetector detector;
     Definitions robot = new Definitions();
-    DigitalChannel leadScrewLimitBot;
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -27,9 +26,7 @@ public class CraterAuto extends LinearOpMode
         /**
          * Initialization
          */
-        leadScrewLimitBot = hardwareMap.get(DigitalChannel.class, "leadScrewLimitBot");//Initalizes REV touch sensor - for lead screw limit switch
-        leadScrewLimitBot.setMode(DigitalChannel.Mode.INPUT);//Sets the mode for REV touch sensor to input
-        robot.robotHardwareMapInit(hardwareMap);//Initializes robot hardware map
+        robot.testHardwareMapInit(hardwareMap);//Initializes robot hardware map
 
 
         //Setup detector
@@ -43,16 +40,7 @@ public class CraterAuto extends LinearOpMode
         detector.ratioScorer.perfectRatio = 1.0;
         detector.enable();//Start detector
 
-        //Moves lead screw to lowest position
-        robot.leadScrewMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        while (leadScrewLimitBot.getState()) {
-            robot.leadScrewMotor.setPower(-0.75);
-        }
-        robot.leadScrewMotor.setPower(0);
-
         //Resets robot values before match
-        robot.resetEncoders();//Resets encoder tick values, sets motor PID mode to STOP_AND_RESET_ENCODERS
-        robot.servoInit();//Initialized servos to starting positions
 
         waitForStart();//Waits until driver clicks the start button
 
@@ -60,12 +48,6 @@ public class CraterAuto extends LinearOpMode
         /**
          * Autonomous starts - Match time of 0 seconds
          */
-
-        //Robot drops from the lander, but is still attached
-        robot.leadScrewMotor.setTargetPosition(6000);
-        robot.leadScrewMotor.setPower(-1);
-        sleep(12000);
-        robot.leadScrewMotor.setPower(0);
 
         //look towards left silver and moves hook out from lander
         robot.runWithOutEncoders();
@@ -84,8 +66,7 @@ public class CraterAuto extends LinearOpMode
         }
         robot.setPower(0);
 
-
-        robot.moveInches(robot.BACKWARD,31,0.5);
+        robot.moveInches(robot.BACKWARD,31,0.5);//here
         sleep(10000);//this needs testing
         robot.setPower(0);
 
