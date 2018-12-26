@@ -71,21 +71,14 @@ public class Definitions
 
     public void teleOpInit()
     {
-        leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        runWithOutEncoders();
         servoInit();
     }
 
     public void autoInit()
     {
         resetEncoders();
-        leftBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leadScrewMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        runWithEncoders();
         servoInit();
     }
 
@@ -97,6 +90,15 @@ public class Definitions
         rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
+    void runWithEncoders()
+    {
+        leftBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leadScrewMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
     public int inchesToTicks(double inches)
     {
         return (int) ((1120 / (Math.PI * 4)) * inches);
@@ -106,19 +108,28 @@ public class Definitions
     //Used For
     public void moveInches(int direction, double inches, double power)
     {
-        switch (direction) {
+
+        //resetEncoders();
+        runWithEncoders();
+
+        switch (direction)
+        {
             case FORWARD: //Forward
                 setDriveForward();
                 moveInches(inches, power);
+                break;
             case BACKWARD: //Backwards
                 setDriveBackward();
                 moveInches(inches, power);
+                break;
             case STRAFERIGHT: //Strafe Right
                 setStrafeLeft();
                 moveInches(inches, power);
+                break;
             case STRAFELEFT: //Strafe Left
                 setStrafeRight();
                 moveInches(inches, power);
+                break;
             default:
                 break;
         }

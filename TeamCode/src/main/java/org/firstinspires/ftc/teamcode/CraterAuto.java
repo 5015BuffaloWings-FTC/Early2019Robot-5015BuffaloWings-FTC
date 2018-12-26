@@ -24,9 +24,7 @@ public class CraterAuto extends LinearOpMode
     double rotation;
 
     boolean landing = true;
-    boolean rotateToLeftSilver = false;
-    boolean scanRight = false;
-    boolean kissCube = false;
+    boolean checkMiddle = false;
 
     @Override
     public void runOpMode() {
@@ -66,61 +64,40 @@ public class CraterAuto extends LinearOpMode
 
         waitForStart();
 
+        robot.leadScrewMotor.setTargetPosition(6000);
+        robot.leadScrewMotor.setPower(-1);
+        sleep(12000);
+        robot.leadScrewMotor.setPower(0);
 
-        while (opModeIsActive())
+        //look towards left silver
+        robot.runWithOutEncoders();
+        robot.setRotateLeft();
+        robot.setPower(0.5);
+        sleep(400);
+        robot.setPower(0);
+
+        robot.runWithOutEncoders();
+        robot.setRotateRight();
+        while(!detector.getAligned())
         {
-            if(landing) {
-                robot.leadScrewMotor.setTargetPosition(6000);
-                robot.leadScrewMotor.setPower(-1);
-                if (robot.leadScrewMotor.getCurrentPosition() == 6000 && !robot.leadScrewMotor.isBusy()) {
-                    landing = false;
-                    rotateToLeftSilver = true;
-                }
-            }
-
-            if(rotateToLeftSilver)
-            {
-                robot.setRotateLeft();
-                robot.moveInches(6,0.5);
-                if(!robot.isRobotBusy())
-                {
-                    rotateToLeftSilver = false;
-                    scanRight = true;
-                }
-            }
-
-            if(scanRight)
-            {
-                robot.setRotateRight();
-                robot.resetEncoders();
-                robot.runWithOutEncoders();
-                while(!detector.getAligned())
-                {
-                    robot.setPower(0.5);
-                }
-                if(!robot.isRobotBusy())
-                {
-                    scanRight = false;
-                    kissCube = true;
-                }
-            }
-
-            if(kissCube)
-            {
-                robot.moveInches(robot.FORWARD,12,0.5);
-                if(!robot.isRobotBusy())
-                {
-                    kissCube = false;
-                }
-            }
-
-
-
-            telemetry.addData("IsAligned" , detector.getAligned()); // Is the bot aligned with the gold mineral?
-            telemetry.addData("X Pos" , detector.getXPosition());
-            telemetry.update();
+            robot.setPower(0.25);
         }
+        robot.setPower(0);
+
+
+        robot.runWithEncoders();
+        robot.setDriveBackward();
+        robot.moveInches(31,0.5);
+        sleep(12000);
+        robot.setPower(0);
+
+        robot.runWithEncoders();
+        robot.setDriveForward();
+        robot.moveInches(31,0.5);
+        sleep(12000);
+        robot.setPower(0);
 
         detector.disable();
+
     }
 }

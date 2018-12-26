@@ -40,6 +40,7 @@ import com.qualcomm.robotcore.util.Range;
  * |            /                            \             |
  *  \          /                              \           /
  *   \________/                                \_________/
+ * From : https://www.asciiart.eu/computers/game-consoles
  *
  * Start A - Movement;
  * Joy R: lateral movement (All directions)
@@ -56,7 +57,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name = "Basic TeleOp v0.4", group = "Buffalo Wings")
-public class BasicTeleOp extends LinearOpMode
+public class BasicTeleOp extends LinearOpMode //change to OP mode
 {
     private Definitions robot = new Definitions();
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
