@@ -86,15 +86,13 @@ public class CraterAuto extends LinearOpMode
 
 
         robot.runWithEncoders();
-        robot.setDriveBackward();
-        robot.moveInches(31,0.5);
-        sleep(12000);
+        robot.moveInches(robot.BACKWARD,31,0.5);
+        sleep(10000);//this needs testing
         robot.setPower(0);
 
         robot.runWithEncoders();
-        robot.setDriveForward();
-        robot.moveInches(31,0.5);
-        sleep(12000);
+        robot.moveInches(robot.FORWARD,31,0.5);
+        sleep(10000);//this needs testing
         robot.setPower(0);
 
         detector.disable();
