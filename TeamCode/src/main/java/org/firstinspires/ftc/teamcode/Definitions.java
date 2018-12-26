@@ -1,15 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.TouchSensor;
-import com.qualcomm.robotcore.hardware.configuration.annotations.DigitalIoDeviceType;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorDigitalTouch;
 
 
 public class Definitions
@@ -26,14 +21,9 @@ public class Definitions
     DcMotor rightBackMotor = null;
     DcMotor scoringArmMotor = null;
     DcMotor leadScrewMotor = null;
-    Servo scoringArmReleaseServo = null;
-    Servo ballStopperServo = null;
-    Servo scoringArmLatchServo = null;
-
-    public Definitions()
-    {
-
-    }
+    CRServo leftArmServo = null;
+    CRServo rightArmServo = null;
+    Servo dumpServo = null; //Sam plz rename this if you get the chance
 
     public void robotHardwareMapInit(HardwareMap Map)
     {
@@ -44,9 +34,9 @@ public class Definitions
         rightFrontMotor = Map.dcMotor.get("rightFrontMotor");
         scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
         leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
-        scoringArmReleaseServo = Map.servo.get("scoringArmReleaseServo");
-        ballStopperServo = Map.servo.get("ballStopperServo");
-        scoringArmLatchServo = Map.servo.get("scoringArmLatchServo");
+        leftArmServo = Map.crservo.get("leftArmServo");
+        rightArmServo = Map.crservo.get("rightArmServo");
+        dumpServo = Map.servo.get("dumpServo");
     }
 
     public void testHardwareMapInit(HardwareMap Map)
@@ -60,11 +50,10 @@ public class Definitions
 
     void servoInit()
     {
-        scoringArmReleaseServo.setPosition(0);
-        ballStopperServo.setPosition(0);
-        scoringArmLatchServo.setPosition(1);
+        dumpServo.setPosition(0);
+        leftArmServo.setPower(0);
+        rightArmServo.setPower(0);
     }
-
 
     void runWithOutEncoders()
     {
@@ -74,11 +63,10 @@ public class Definitions
         rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    public int inchesToTicks(double inches)
+    private int inchesToTicks(double inches)
     {
         return (int) ((1120 / (Math.PI * 4)) * inches);
     }
-
 
     //Used For
     public void moveInches(int direction, double inches, double power)
