@@ -20,6 +20,7 @@ public class Definitions
     DcMotor rightFrontMotor = null;
     DcMotor rightBackMotor = null;
     DcMotor scoringArmMotor = null;
+    DcMotor armReel = null;
     DcMotor leadScrewMotor = null;
     CRServo leftArmServo = null;
     CRServo rightArmServo = null;
@@ -33,6 +34,7 @@ public class Definitions
         rightBackMotor = Map.dcMotor.get("rightBackMotor");
         rightFrontMotor = Map.dcMotor.get("rightFrontMotor");
         scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
+        armReel = Map.dcMotor.get("armReel");
         leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
         leftArmServo = Map.crservo.get("leftArmServo");
         rightArmServo = Map.crservo.get("rightArmServo");
