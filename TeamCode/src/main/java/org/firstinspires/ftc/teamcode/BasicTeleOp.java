@@ -3,14 +3,16 @@ package org.firstinspires.ftc.teamcode;
 //These are need to have the app run the code properly
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 //Needed to alter inputs from joysticks. The .clip() method/function is what we use most
 import com.qualcomm.robotcore.util.Range;
 
 /**
  * @author Noah Zulick
- * @author Sam Cartered
+ * @author Sam Carter
  *
  * @version 12-5-18
  */
@@ -38,6 +40,7 @@ import com.qualcomm.robotcore.util.Range;
  * |            /                            \             |
  *  \          /                              \           /
  *   \________/                                \_________/
+ * From : https://www.asciiart.eu/computers/game-consoles
  *
  * Start A - Movement;
  * Joy R: lateral movement (All directions)
@@ -54,10 +57,11 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name = "Basic TeleOp v0.4", group = "Buffalo Wings")
-public class BasicTeleOp extends LinearOpMode
+public class BasicTeleOp extends LinearOpMode //change to OP mode
 {
     private Definitions robot = new Definitions();
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
+	DigitalChannel leadScrewLimitBot;
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -68,13 +72,20 @@ public class BasicTeleOp extends LinearOpMode
 
     	//Sets up robot
         robot.robotHardwareMapInit(hardwareMap);
-		robot.teleOpInit();
-		robot.setDriveForward();
+		robot.resetEncoders();
+		robot.servoInit();
+		leadScrewLimitBot = hardwareMap.get(DigitalChannel.class, "leadScrewLimitBot");
+		leadScrewLimitBot.setMode(DigitalChannel.Mode.INPUT);
+
         waitForStart();
 
         //This is what will run during the Remotely Operated mode
         while(opModeIsActive())
 		{
+
+			/**
+			 * DRIVING SECTION
+			 */
 			//slow is used as a multiplier to change speed
 			double slowMovement;
 			if(gamepad1.right_bumper)
@@ -92,25 +103,28 @@ public class BasicTeleOp extends LinearOpMode
 			double driveBackRightPower = Range.clip((-gamepad1.left_stick_y + (gamepad1.left_stick_x) - gamepad1.right_stick_x) * slowMovement, -1, 1);
 			double driveBackLeftPower = Range.clip((gamepad1.left_stick_y + (gamepad1.left_stick_x) - gamepad1.right_stick_x) * slowMovement, -1, 1);
 
-			// Apply the values to the motors.
-//			robot.rightFrontMotor.setPower(driveFrontRightPower);
-//			robot.leftFrontMotor.setPower(driveFrontLeftPower);
-//			robot.rightBackMotor.setPower(driveBackRightPower);
-//			robot.leftBackMotor.setPower(driveBackLeftPower);
-
-
-			robot.leftBackMotor.setPower(1);  //Test this line to see if this is different from setting each motor individually.
-								//If it doesn't work, this isn't the problem.  If it does, the problem is with
-								//setting the power individually.
+			 //Apply the values to the motors.
+			robot.rightFrontMotor.setPower(driveFrontRightPower);
+			robot.leftFrontMotor.setPower(driveFrontLeftPower);
+			robot.rightBackMotor.setPower(driveBackRightPower);
+			robot.leftBackMotor.setPower(driveBackLeftPower);
 
 			telemetry.addData("stick input", gamepad1.left_stick_y);
 			telemetry.addData("power", robot.leftBackMotor.getPower());
 
 
-
-
+			/**
+			 * LEADSCREW SECTION
+			 */
 			double leadScrewMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
-			robot.leadScrewMotor.setPower(-leadScrewMotorPower);
+			if(!leadScrewLimitBot.getState())
+				robot.leadScrewMotor.setPower(0.5);
+			else
+				robot.leadScrewMotor.setPower(-leadScrewMotorPower);
+
+			//telemetry.addData("Pressed?", robot.leadScrewLimitBot.isPressed());
+			telemetry.addData("Power to LeadScrew", leadScrewMotorPower);
+			telemetry.update();
 
 
 
@@ -126,7 +140,7 @@ public class BasicTeleOp extends LinearOpMode
 			}
 			else
 			{
-				scoringArmSlow = 0.65;
+				scoringArmSlow = 0.85;
 			}
 
 			//Scoring arm - controls input from gamepad2 left joystick
@@ -141,19 +155,6 @@ public class BasicTeleOp extends LinearOpMode
 			{
 				robot.scoringArmMotor.setPower(scoringArmMotorPower * scoringArmSlow);
 			}
-
-
-
-
-
-
-			//We added this line of telemetry because the robot arm is not strong enough at
-			// 0 power to hold the arm up...
-			//So we are going to find what power the arm needs to be at in order to
-			//hold the arm steady.
-			telemetry.addLine("Values\n")
-					.addData("lead screw value: ", robot.leadScrewMotor.getCurrentPosition());
-			telemetry.update();
 
 
 
@@ -186,7 +187,6 @@ public class BasicTeleOp extends LinearOpMode
 			{
 				//code
 			}
-
 		}
     }
 }
