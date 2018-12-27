@@ -88,14 +88,9 @@ public class TeleOpBuffaloWings extends OpMode
         double scoringArmMotorPower = Range.clip(gamepad2.left_stick_y, -1, 1);
 
         //Scoring arm - Sets speed for lift arm using the armSlow multiplier
-        if(gamepad2.right_bumper)
-        {
-            robot.scoringArmMotor.setPower(0.5);
-        }
-        else
-        {
-            robot.scoringArmMotor.setPower(scoringArmMotorPower * scoringArmSlow);
-        }
+        robot.scoringArmMotor.setPower(scoringArmMotorPower * scoringArmSlow);
+
+
 
 
 
