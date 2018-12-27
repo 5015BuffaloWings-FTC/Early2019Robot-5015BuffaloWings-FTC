@@ -57,16 +57,27 @@ public class TeleOpBuffaloWings extends OpMode
         /**
          * LEADSCREW SECTION
          */
-        double leadScrewMotorPower = Range.clip(gamepad2.right_stick_y, -1, 1);
-        if(!leadScrewLimitBot.getState())
-            robot.leadScrewMotor.setPower(0.5);
+        if(gamepad2.dpad_up)
+        {
+            if(!leadScrewLimitBot.getState())
+                robot.leadScrewMotor.setPower(-0.5);
+            else
+                robot.leadScrewMotor.setPower(-1);
+        }
+        else if(gamepad2.dpad_down)
+        {
+            if(!leadScrewLimitBot.getState())
+                robot.leadScrewMotor.setPower(-0.5);
+            else
+                robot.leadScrewMotor.setPower(1);
+        }
         else
-            robot.leadScrewMotor.setPower(-leadScrewMotorPower);
-
-        //telemetry.addData("Pressed?", robot.leadScrewLimitBot.isPressed());
-        telemetry.addData("Power to LeadScrew", leadScrewMotorPower);
-        telemetry.update();
-
+        {
+            if(!leadScrewLimitBot.getState())
+                robot.leadScrewMotor.setPower(0.5);
+            else
+                robot.leadScrewMotor.setPower(0);
+        }
 
 
 
@@ -97,33 +108,16 @@ public class TeleOpBuffaloWings extends OpMode
         /**
          * SERVO SECTION
          */
-        //Gamepad 2 button Y - releases the arm
-        if(gamepad2.y)
-        {
-            robot.scoringArmReleaseServo.setPosition(0.5);
-        }
-
-        //Gamepad 2 button A - Latches the scoring arm into place
-        if(gamepad2.a)
-        {
-            robot.scoringArmLatchServo.setPosition(0.65);
-        }
-
-        //Gamepad 2 button B - Opens the scoring arm container
-        if(gamepad2.b)
-        {
-            robot.ballStopperServo.setPosition(0.25);
-        }
-        else
-        {
-            robot.ballStopperServo.setPosition(0);
-        }
+        //We are working on mounting our servos still..
+        //While we do damage control, there will be minimal servo code
 
         /**
          * Telemetry Section
          */
+        //No debugging needed right now!! YAY
 
         telemetry.addData("Status:", "Running TeleOpMode");
+        telemetry.update();
     }
 
     public void stop()

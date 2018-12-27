@@ -36,9 +36,9 @@ public class Definitions
         scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
         armReel = Map.dcMotor.get("armReel");
         leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
-        leftArmServo = Map.crservo.get("leftArmServo");
-        rightArmServo = Map.crservo.get("rightArmServo");
-        dumpServo = Map.servo.get("dumpServo");
+        //leftArmServo = Map.crservo.get("leftArmServo");
+        //rightArmServo = Map.crservo.get("rightArmServo");
+        //dumpServo = Map.servo.get("dumpServo");
     }
 
     public void testHardwareMapInit(HardwareMap Map)
