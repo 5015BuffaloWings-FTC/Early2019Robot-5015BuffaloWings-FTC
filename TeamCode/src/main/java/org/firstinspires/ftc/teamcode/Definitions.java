@@ -22,23 +22,18 @@ public class Definitions
     DcMotor scoringArmMotor = null;
     DcMotor armReel = null;
     DcMotor leadScrewMotor = null;
-    CRServo leftArmServo = null;
-    CRServo rightArmServo = null;
-    Servo dumpServo = null; //Sam plz rename this if you get the chance
+    CRServo armServo = null;
 
     public void robotHardwareMapInit(HardwareMap Map)
     {
         //Naming Scheme for configuring robot controller app
         leftBackMotor = Map.dcMotor.get("leftBackMotor");
-        leftFrontMotor = Map.dcMotor.get("leftFrontMotor");
         rightBackMotor = Map.dcMotor.get("rightBackMotor");
         rightFrontMotor = Map.dcMotor.get("rightFrontMotor");
         scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
         armReel = Map.dcMotor.get("armReel");
         leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
-        //leftArmServo = Map.crservo.get("leftArmServo");
-        //rightArmServo = Map.crservo.get("rightArmServo");
-        //dumpServo = Map.servo.get("dumpServo");
+        armServo = Map.crservo.get("armServo");
     }
 
     public void testHardwareMapInit(HardwareMap Map)
@@ -52,9 +47,7 @@ public class Definitions
 
     void servoInit()
     {
-        dumpServo.setPosition(0);
-        leftArmServo.setPower(0);
-        rightArmServo.setPower(0);
+        armServo.setPower(0);
     }
 
     void runWithOutEncoders()
@@ -63,6 +56,7 @@ public class Definitions
         leftBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leadScrewMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     private int inchesToTicks(double inches)

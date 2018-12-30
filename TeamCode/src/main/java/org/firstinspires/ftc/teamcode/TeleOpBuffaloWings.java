@@ -15,8 +15,8 @@ public class TeleOpBuffaloWings extends OpMode
 
     public void init()
     {
-        robot.runWithOutEncoders();
-        robot.servoInit();
+        //robot.runWithOutEncoders();
+        //robot.servoInit();
         robot.robotHardwareMapInit(hardwareMap);
         leadScrewLimitBot = hardwareMap.get(DigitalChannel.class, "leadScrewLimitBot");
         leadScrewLimitBot.setMode(DigitalChannel.Mode.INPUT);
@@ -74,7 +74,7 @@ public class TeleOpBuffaloWings extends OpMode
         else
         {
             if(!leadScrewLimitBot.getState())
-                robot.leadScrewMotor.setPower(0.5);
+                robot.leadScrewMotor.setPower(-0.75);
             else
                 robot.leadScrewMotor.setPower(0);
         }
@@ -101,6 +101,8 @@ public class TeleOpBuffaloWings extends OpMode
         //Scoring arm - Sets speed for lift arm using the armSlow multiplier
         robot.scoringArmMotor.setPower(scoringArmMotorPower * scoringArmSlow);
 
+        robot.armReel.setPower(-gamepad2.right_stick_y);
+
 
 
 
@@ -108,8 +110,18 @@ public class TeleOpBuffaloWings extends OpMode
         /**
          * SERVO SECTION
          */
-        //We are working on mounting our servos still..
-        //While we do damage control, there will be minimal servo code
+        if(gamepad2.a)
+        {
+            robot.armServo.setPower(1);
+        }
+        else if(gamepad2.b)
+        {
+            robot.armServo.setPower(-1);
+        }
+        else
+        {
+            robot.armServo.setPower(0);
+        }
 
         /**
          * Telemetry Section
