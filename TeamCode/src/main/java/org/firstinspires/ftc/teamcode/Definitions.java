@@ -20,7 +20,7 @@ public class Definitions
     DcMotor rightFrontMotor = null;
     DcMotor rightBackMotor = null;
     DcMotor scoringArmMotor = null;
-    DcMotor armReel = null;
+    DcMotor armReelMotor = null;
     DcMotor leadScrewMotor = null;
     CRServo armServo = null;
 
@@ -28,10 +28,11 @@ public class Definitions
     {
         //Naming Scheme for configuring robot controller app
         leftBackMotor = Map.dcMotor.get("leftBackMotor");
+        leftFrontMotor = Map.dcMotor.get("leftFrontMotor");
         rightBackMotor = Map.dcMotor.get("rightBackMotor");
         rightFrontMotor = Map.dcMotor.get("rightFrontMotor");
         scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
-        armReel = Map.dcMotor.get("armReel");
+        armReelMotor = Map.dcMotor.get("armReelMotor");
         leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
         armServo = Map.crservo.get("armServo");
     }
@@ -57,6 +58,8 @@ public class Definitions
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leadScrewMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        scoringArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armReelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     private int inchesToTicks(double inches)

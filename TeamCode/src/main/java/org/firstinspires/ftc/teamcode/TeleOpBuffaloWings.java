@@ -15,9 +15,8 @@ public class TeleOpBuffaloWings extends OpMode
 
     public void init()
     {
-        //robot.runWithOutEncoders();
-        //robot.servoInit();
         robot.robotHardwareMapInit(hardwareMap);
+        robot.runWithOutEncoders();
         leadScrewLimitBot = hardwareMap.get(DigitalChannel.class, "leadScrewLimitBot");
         leadScrewLimitBot.setMode(DigitalChannel.Mode.INPUT);
     }
@@ -35,7 +34,7 @@ public class TeleOpBuffaloWings extends OpMode
         }
         else
         {
-            slowMovement= 1;
+            slowMovement = 1;
         }
 
         //Using Range.clip to limit joystick values from -1 fto 1 (clipping the outputs)
@@ -49,10 +48,6 @@ public class TeleOpBuffaloWings extends OpMode
         robot.leftFrontMotor.setPower(driveFrontLeftPower);
         robot.rightBackMotor.setPower(driveBackRightPower);
         robot.leftBackMotor.setPower(driveBackLeftPower);
-
-        telemetry.addData("stick input", gamepad1.left_stick_y);
-        telemetry.addData("power", robot.leftBackMotor.getPower());
-
 
         /**
          * LEADSCREW SECTION
@@ -88,11 +83,11 @@ public class TeleOpBuffaloWings extends OpMode
         double scoringArmSlow;
         if(gamepad2.left_bumper)
         {
-            scoringArmSlow = 1;
+            scoringArmSlow = 0.85;
         }
         else
         {
-            scoringArmSlow = 0.85;
+            scoringArmSlow = 0.5;
         }
 
         //Scoring arm - controls input from gamepad2 left joystick
@@ -101,7 +96,7 @@ public class TeleOpBuffaloWings extends OpMode
         //Scoring arm - Sets speed for lift arm using the armSlow multiplier
         robot.scoringArmMotor.setPower(scoringArmMotorPower * scoringArmSlow);
 
-        robot.armReel.setPower(-gamepad2.right_stick_y);
+        robot.armReelMotor.setPower(-gamepad2.right_stick_y);
 
 
 
@@ -136,5 +131,7 @@ public class TeleOpBuffaloWings extends OpMode
     {
         robot.setPower(0);
         robot.leadScrewMotor.setPower(0);
+        robot.armReelMotor.setPower(0);
+        robot.scoringArmMotor.setPower(0);
     }
 }

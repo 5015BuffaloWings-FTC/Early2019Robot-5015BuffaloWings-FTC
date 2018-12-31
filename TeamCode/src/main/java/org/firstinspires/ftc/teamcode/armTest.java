@@ -17,7 +17,6 @@ public class armTest extends LinearOpMode
     public void runOpMode() throws InterruptedException
     {
         robot.robotHardwareMapInit(hardwareMap);
-        robot.resetEncoders();
 
         waitForStart();
 
@@ -27,39 +26,25 @@ public class armTest extends LinearOpMode
             if(gamepad2.dpad_up)
             {
                 robot.scoringArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                robot.scoringArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             }
             else
             {
                 robot.scoringArmMotor.setPower(gamepad2.left_stick_y);
             }
-
-
-
-
-            /**
-             * The next chunk of code will lower the arm slowly when it is at any angle lower than 90 degrees
-             */
-            final double armPositionAt90 = -37;
-            final double powerToHoldArmAt90 = 0.5;
-            double armPosition = robot.scoringArmMotor.getCurrentPosition();
-            double angleOfArm = (90 * armPosition)/armPositionAt90;
-            double loweringPower = (angleOfArm * powerToHoldArmAt90)/ 90 - 0.1; //I subtracted the 0.1 because we want the arm to lower slowly not just hold
-
-            if(armPosition > 0 && gamepad2.left_stick_y < loweringPower)
+            if(gamepad2.a)
             {
-                if(armPosition <= armPositionAt90)
-                {
-                    robot.scoringArmMotor.setPower(loweringPower);
-                }
-
+                robot.scoringArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.scoringArmMotor.setTargetPosition(420);
+                robot.scoringArmMotor.setPower(0.5);
+                sleep(1000);
+                robot.scoringArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             }
-            //robot.scoringArmMotor.setPower(gamepad2.left_stick_y);
 
-            telemetry.addLine("Values for Arm\n")
-                    .addData("Arm Position: ", armPosition)
-                    .addData("Arm Power: ", gamepad2.left_stick_y)
-                    .addData("Lowering Power: ", loweringPower)
-                    .addData("Angle Of Arm: ", angleOfArm);
+            int armPosition = robot.scoringArmMotor.getCurrentPosition();
+
+
+            telemetry.addData("Encoder Value", armPosition);
 
             telemetry.update();
         }
