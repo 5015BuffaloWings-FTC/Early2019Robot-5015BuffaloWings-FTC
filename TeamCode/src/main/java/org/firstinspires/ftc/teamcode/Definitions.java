@@ -84,11 +84,11 @@ public class Definitions
                 moveInches(inches, power);
                 break;
             case STRAFERIGHT: //Strafe Right
-                setStrafeLeft();
+                setStrafeRight();
                 moveInches(inches, power);
                 break;
             case STRAFELEFT: //Strafe Left
-                setStrafeRight();
+                setStrafeLeft();
                 moveInches(inches, power);
                 break;
             default:
@@ -115,13 +115,17 @@ public class Definitions
         leftFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //leadScrewMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leadScrewMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armReelMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        scoringArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         leftBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //leadScrewMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leadScrewMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armReelMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        scoringArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     void setPower(double power)
@@ -150,16 +154,16 @@ public class Definitions
 
     void setStrafeLeft()
     {
-        leftBackMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftBackMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rightBackMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     void setStrafeRight()
     {
-        leftBackMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftBackMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }

@@ -14,16 +14,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="CraterAuto")
 
-public class CraterAuto extends LinearOpMode
-{
+public class CraterAuto extends LinearOpMode {
     // Detector object
     private GoldAlignDetector detector;
     Definitions robot = new Definitions();
     DigitalChannel leadScrewLimitBot;
 
     @Override
-    public void runOpMode() throws InterruptedException
-    {
+    public void runOpMode() throws InterruptedException {
         /**
          * Initialization
          */
@@ -46,7 +44,7 @@ public class CraterAuto extends LinearOpMode
         //Moves lead screw to lowest position
         robot.leadScrewMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         while (leadScrewLimitBot.getState()) {
-            robot.leadScrewMotor.setPower(-0.75);
+            robot.leadScrewMotor.setPower(0.75);
         }
         robot.leadScrewMotor.setPower(0);
 
@@ -60,40 +58,64 @@ public class CraterAuto extends LinearOpMode
         /**
          * Autonomous starts - Match time of 0 seconds
          */
+        if (opModeIsActive()) {
+            //Robot drops from the lander, but is still attached
+            robot.leadScrewMotor.setTargetPosition(-6100);
+            robot.leadScrewMotor.setPower(-1);
+            sleep(12000);
+            robot.leadScrewMotor.setPower(0);
 
-        //Robot drops from the lander, but is still attached
-        robot.leadScrewMotor.setTargetPosition(6000);
-        robot.leadScrewMotor.setPower(-1);
-        sleep(12000);
-        robot.leadScrewMotor.setPower(0);
+            robot.runWithOutEncoders();
+            robot.setRotateRight();
+            robot.setPower(0.5);
+            sleep(300);
+            robot.setPower(0);
 
-        //look towards left silver and moves hook out from lander
-        robot.runWithOutEncoders();
-        robot.setRotateLeft();
-        robot.setPower(0.5);
-        sleep(400);
-        robot.setPower(0);
+            robot.moveInches(robot.STRAFERIGHT, 5, 1);
+            sleep(1000);
+            robot.setPower(0);
+
+            robot.moveInches(robot.FORWARD, 5, 1);
+            sleep(1000);
+            robot.setPower(0);
+
+            robot.moveInches(robot.STRAFELEFT, 5, 1);
+            sleep(1000);
+            robot.setPower(0);
+
+            robot.scoringArmMotor.setTargetPosition(-100);
+            robot.scoringArmMotor.setPower(-1);
+            sleep(3000);
+            robot.scoringArmMotor.setPower(0);
+
+            robot.runWithOutEncoders();
+            robot.armReelMotor.setPower(0.5);
+            sleep(4000);
+            robot.armReelMotor.setPower(0);
 
 
+            //look towards left silver and moves hook out from lander
+            robot.runWithOutEncoders();
+            robot.setRotateLeft();
+            robot.setPower(0.5);
+            sleep(400);
+            robot.setPower(0);
 
-        //Scans clockwise looking for the Gold Mineral
-        robot.setRotateRight();
-        while(!detector.getAligned())
-        {
-            robot.setPower(0.25);
+
+            //Scans clockwise looking for the Gold Mineral
+            robot.setRotateRight();
+            while (!detector.getAligned()) {
+                robot.moveInches(robot.FORWARD, 31, 1);
+                sleep(4000);//this needs testing
+                robot.setPower(0);
+
+                robot.moveInches(robot.BACKWARD, 31, 1);
+                sleep(4000);//this needs testing
+                robot.setPower(0);
+            }
+
+            detector.disable();
+
         }
-        robot.setPower(0);
-
-
-        robot.moveInches(robot.BACKWARD,31,0.5);
-        sleep(10000);//this needs testing
-        robot.setPower(0);
-
-        robot.moveInches(robot.FORWARD,31,0.5);
-        sleep(10000);//this needs testing
-        robot.setPower(0);
-
-        detector.disable();
-
     }
 }

@@ -16,6 +16,7 @@ public class TeleOpBuffaloWings extends OpMode
     public void init()
     {
         robot.robotHardwareMapInit(hardwareMap);
+        robot.resetEncoders();
         robot.runWithOutEncoders();
         leadScrewLimitBot = hardwareMap.get(DigitalChannel.class, "leadScrewLimitBot");
         leadScrewLimitBot.setMode(DigitalChannel.Mode.INPUT);
@@ -54,15 +55,12 @@ public class TeleOpBuffaloWings extends OpMode
          */
         if(gamepad2.dpad_up)
         {
-            if(!leadScrewLimitBot.getState())
-                robot.leadScrewMotor.setPower(-0.5);
-            else
-                robot.leadScrewMotor.setPower(-1);
+            robot.leadScrewMotor.setPower(-1);
         }
         else if(gamepad2.dpad_down)
         {
             if(!leadScrewLimitBot.getState())
-                robot.leadScrewMotor.setPower(-0.5);
+                robot.leadScrewMotor.setPower(-0.75);
             else
                 robot.leadScrewMotor.setPower(1);
         }
@@ -73,7 +71,6 @@ public class TeleOpBuffaloWings extends OpMode
             else
                 robot.leadScrewMotor.setPower(0);
         }
-
 
 
         /**
@@ -124,6 +121,9 @@ public class TeleOpBuffaloWings extends OpMode
         //No debugging needed right now!! YAY
 
         telemetry.addData("Status:", "Running TeleOpMode");
+        telemetry.addData("Lead Screw:", robot.leadScrewMotor.getCurrentPosition());
+        telemetry.addData("scoringArm", robot.scoringArmMotor.getCurrentPosition());
+        telemetry.addData("reel", robot.armReelMotor.getCurrentPosition());
         telemetry.update();
     }
 
