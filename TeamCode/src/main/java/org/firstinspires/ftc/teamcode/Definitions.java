@@ -19,10 +19,11 @@ public class Definitions
     DcMotor leftBackMotor = null;
     DcMotor rightFrontMotor = null;
     DcMotor rightBackMotor = null;
-    DcMotor scoringArmMotor = null;
-    DcMotor armReelMotor = null;
+    //DcMotor scoringArmMotor = null;
+    //DcMotor armReelMotor = null;
     DcMotor leadScrewMotor = null;
-    CRServo armServo = null;
+    //CRServo armServo = null;
+    //CRServo armExtendorServo = null;
 
     public void robotHardwareMapInit(HardwareMap Map)
     {
@@ -31,10 +32,11 @@ public class Definitions
         leftFrontMotor = Map.dcMotor.get("leftFrontMotor");
         rightBackMotor = Map.dcMotor.get("rightBackMotor");
         rightFrontMotor = Map.dcMotor.get("rightFrontMotor");
-        scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
-        armReelMotor = Map.dcMotor.get("armReelMotor");
+        //scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
+        //armReelMotor = Map.dcMotor.get("armReelMotor");
         leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
-        armServo = Map.crservo.get("armServo");
+        //armServo = Map.crservo.get("armServo");
+        //armExtendorServo = Map.crservo.get("armExtendorServo");
     }
 
     public void testHardwareMapInit(HardwareMap Map)
@@ -46,10 +48,10 @@ public class Definitions
         rightFrontMotor = Map.dcMotor.get("rightFrontMotor");
     }
 
-    void servoInit()
-    {
-        armServo.setPower(0);
-    }
+   // void servoInit()
+   // {
+       // armServo.setPower(0);
+   // }
 
     void runWithOutEncoders()
     {
@@ -58,8 +60,8 @@ public class Definitions
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leadScrewMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        scoringArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armReelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //scoringArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //armReelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     private int inchesToTicks(double inches)
@@ -116,16 +118,16 @@ public class Definitions
         rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leadScrewMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        armReelMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        scoringArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //armReelMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //scoringArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         leftBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leadScrewMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        armReelMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        scoringArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //armReelMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //scoringArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     void setPower(double power)

@@ -48,71 +48,40 @@ public class CraterAuto extends LinearOpMode {
         }
         robot.leadScrewMotor.setPower(0);
 
-        //Resets robot values before match
-        robot.resetEncoders();//Resets encoder tick values, sets motor PID mode to STOP_AND_RESET_ENCODERS
-        robot.servoInit();//Initialized servos to starting positions
+        //Resets robot values before match1
+        robot.resetEncoders();//Resets encoder tick values, sets motor PID mode to STOP_AN1D_RESET_ENCODERS
+        //robot.servoInit();//Initialized servos to starting positions1
 
-        waitForStart();//Waits until driver clicks the start button
+        waitForStart();//Waits until driver clicks the start button1
 
 
         /**
          * Autonomous starts - Match time of 0 seconds
          */
-        if (opModeIsActive()) {
+        if (!isStopRequested()) {
             //Robot drops from the lander, but is still attached
-            robot.leadScrewMotor.setTargetPosition(-6100);
+            robot.leadScrewMotor.setTargetPosition(-5250);
             robot.leadScrewMotor.setPower(-1);
-            sleep(12000);
+            sleep(13000);
             robot.leadScrewMotor.setPower(0);
 
             robot.runWithOutEncoders();
-            robot.setRotateRight();
-            robot.setPower(0.5);
-            sleep(300);
-            robot.setPower(0);
-
-            robot.moveInches(robot.STRAFERIGHT, 5, 1);
-            sleep(1000);
-            robot.setPower(0);
-
-            robot.moveInches(robot.FORWARD, 5, 1);
-            sleep(1000);
-            robot.setPower(0);
-
-            robot.moveInches(robot.STRAFELEFT, 5, 1);
-            sleep(1000);
-            robot.setPower(0);
-
-            robot.scoringArmMotor.setTargetPosition(-100);
-            robot.scoringArmMotor.setPower(-1);
-            sleep(3000);
-            robot.scoringArmMotor.setPower(0);
-
-            robot.runWithOutEncoders();
-            robot.armReelMotor.setPower(0.5);
-            sleep(4000);
-            robot.armReelMotor.setPower(0);
-
-
-            //look towards left silver and moves hook out from lander
-            robot.runWithOutEncoders();
             robot.setRotateLeft();
             robot.setPower(0.5);
-            sleep(400);
+            sleep(1500);
             robot.setPower(0);
 
-
-            //Scans clockwise looking for the Gold Mineral
-            robot.setRotateRight();
+            robot.runWithOutEncoders();
+            robot.setRotateLeft();
             while (!detector.getAligned()) {
-                robot.moveInches(robot.FORWARD, 31, 1);
-                sleep(4000);//this needs testing
-                robot.setPower(0);
-
-                robot.moveInches(robot.BACKWARD, 31, 1);
-                sleep(4000);//this needs testing
-                robot.setPower(0);
+                robot.setPower(0.3);
             }
+            robot.setPower(0);
+            sleep(3000);
+
+            robot.setDriveBackward();
+            robot.moveInches(55, 0.5);
+            sleep(2000);
 
             detector.disable();
 
