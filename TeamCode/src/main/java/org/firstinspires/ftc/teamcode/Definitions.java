@@ -22,6 +22,7 @@ public class Definitions
     //DcMotor scoringArmMotor = null;
     //DcMotor armReelMotor = null;
     DcMotor leadScrewMotor = null;
+    CRServo teamMarkerServo = null;
     //CRServo armServo = null;
     //CRServo armExtendorServo = null;
 
@@ -35,6 +36,7 @@ public class Definitions
         //scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
         //armReelMotor = Map.dcMotor.get("armReelMotor");
         leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
+        teamMarkerServo = Map.crservo.get("teamMarkerServo");
         //armServo = Map.crservo.get("armServo");
         //armExtendorServo = Map.crservo.get("armExtendorServo");
     }
@@ -53,6 +55,16 @@ public class Definitions
        // armServo.setPower(0);
    // }
 
+    void driveWithOutEncoders()
+    {
+        leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //scoringArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //armReelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
     void runWithOutEncoders()
     {
         leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -64,7 +76,7 @@ public class Definitions
         //armReelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    private int inchesToTicks(double inches)
+    public int inchesToTicks(double inches)
     {
         return (int) ((1120 / (Math.PI * 4)) * inches);
     }

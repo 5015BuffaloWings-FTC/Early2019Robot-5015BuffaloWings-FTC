@@ -93,18 +93,18 @@ public class TeleOpBuffaloWings extends OpMode
         /**
          * SERVO SECTION
          */
-//        if(gamepad2.a)
-//        {
-//            robot.armServo.setPower(1);
-//        }
-//        else if(gamepad2.b)
-//        {
-//            robot.armServo.setPower(-1);
-//        }
-//        else
-//        {
-//            robot.armServo.setPower(0);
-//        }
+        if(gamepad2.a)
+        {
+            robot.teamMarkerServo.setPower(1);
+        }
+        else if(gamepad2.b)
+        {
+            robot.teamMarkerServo.setPower(-1);
+        }
+        else
+        {
+            robot.teamMarkerServo.setPower(0);
+        }
 //
 //        if(gamepad2.x)
 //        {
@@ -121,6 +121,8 @@ public class TeleOpBuffaloWings extends OpMode
 
 
 
+
+
         /**
          * Telemetry Section
          */
@@ -128,6 +130,7 @@ public class TeleOpBuffaloWings extends OpMode
 
         telemetry.addData("Status:", "Running TeleOpMode");
         telemetry.addData("Lead Screw:", robot.leadScrewMotor.getCurrentPosition());
+        telemetry.addData("pressed", robot.inchesToTicks(robot.leftFrontMotor.getCurrentPosition()));
         //telemetry.addData("scoringArm", robot.scoringArmMotor.getCurrentPosition());
         //telemetry.addData("reel", robot.armReelMotor.getCurrentPosition())
                // .addData("Controller 1 x", gamepad1.left_stick_x);

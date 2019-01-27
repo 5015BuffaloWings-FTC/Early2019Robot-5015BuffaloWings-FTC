@@ -118,6 +118,7 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode
                     telemetry.update();
                 }
             }
+
         }
 
         tfod.shutdown();//Shuts down Tensor Flow
