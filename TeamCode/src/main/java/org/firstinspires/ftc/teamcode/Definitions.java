@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -20,9 +21,10 @@ public class Definitions
     DcMotor rightFrontMotor = null;
     DcMotor rightBackMotor = null;
     //DcMotor scoringArmMotor = null;
-    //DcMotor armReelMotor = null;
+    DcMotor armReelMotor = null;
     DcMotor leadScrewMotor = null;
     CRServo teamMarkerServo = null;
+    DigitalChannel leadScrewLimitBot = null;
     //CRServo armServo = null;
     //CRServo armExtendorServo = null;
 
@@ -33,10 +35,11 @@ public class Definitions
         leftFrontMotor = Map.dcMotor.get("leftFrontMotor");
         rightBackMotor = Map.dcMotor.get("rightBackMotor");
         rightFrontMotor = Map.dcMotor.get("rightFrontMotor");
-        //scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
-        //armReelMotor = Map.dcMotor.get("armReelMotor");
         leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
         teamMarkerServo = Map.crservo.get("teamMarkerServo");
+        leadScrewLimitBot = Map.digitalChannel.get("leadScrewLimitBot");
+        //scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
+        armReelMotor = Map.dcMotor.get("armReelMotor");
         //armServo = Map.crservo.get("armServo");
         //armExtendorServo = Map.crservo.get("armExtendorServo");
     }
@@ -48,21 +51,6 @@ public class Definitions
         leftFrontMotor = Map.dcMotor.get("leftFrontMotor");
         rightBackMotor = Map.dcMotor.get("rightBackMotor");
         rightFrontMotor = Map.dcMotor.get("rightFrontMotor");
-    }
-
-   // void servoInit()
-   // {
-       // armServo.setPower(0);
-   // }
-
-    void driveWithOutEncoders()
-    {
-        leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //scoringArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //armReelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     void runWithOutEncoders()
