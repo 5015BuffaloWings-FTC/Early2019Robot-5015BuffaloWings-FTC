@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.disnodeteam.dogecv.DogeCV;
+import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -14,7 +16,6 @@ public class Definitions
     public final int BACKWARD = 1;
     public final int STRAFELEFT = 2;
     public final int STRAFERIGHT = 3;
-    public final int ROTATE = 4;
 
     DcMotor leftFrontMotor = null;
     DcMotor leftBackMotor = null;
@@ -26,7 +27,6 @@ public class Definitions
     CRServo teamMarkerServo = null;
     DigitalChannel leadScrewLimitBot = null;
     //CRServo armServo = null;
-    //CRServo armExtendorServo = null;
 
     public void robotHardwareMapInit(HardwareMap Map)
     {
@@ -44,13 +44,9 @@ public class Definitions
         //armExtendorServo = Map.crservo.get("armExtendorServo");
     }
 
-    public void testHardwareMapInit(HardwareMap Map)
+    public void dogeCVInit(GoldAlignDetector detector)
     {
-        //Naming Scheme for configuring robot controller app
-        leftBackMotor = Map.dcMotor.get("leftBackMotor");
-        leftFrontMotor = Map.dcMotor.get("leftFrontMotor");
-        rightBackMotor = Map.dcMotor.get("rightBackMotor");
-        rightFrontMotor = Map.dcMotor.get("rightFrontMotor");
+
     }
 
     void runWithOutEncoders()
@@ -69,13 +65,12 @@ public class Definitions
         return (int) ((1120 / (Math.PI * 4)) * inches);
     }
 
-    //Used For
+    //This is used to move a specified number of inches in a gived direction
+    //Sample input robot.moveInches(robot.FORWARD, 12, 0.5);
     public void moveInches(int direction, double inches, double power)
     {
-
-        resetEncoders();
-
-        switch (direction)
+        resetEncoders();//This will make sure all encoders are reset. This is crucial.
+        switch (direction)//This takes the input of the robot direction
         {
             case FORWARD: //Forward
                 setDriveForward();

@@ -51,68 +51,61 @@ public class DepotAuto extends LinearOpMode
          * Autonomous starts - Match time of 0 seconds
          */
 
-        if (opModeIsActive()) {
-            //Robot drops from the lander, but is still attached
-            while(robot.leadScrewMotor.getCurrentPosition() > -7000 && opModeIsActive())
-            {
-                robot.leadScrewMotor.setTargetPosition(-7000);
-                robot.leadScrewMotor.setPower(-1);
-            }
-            robot.leadScrewMotor.setPower(0);
-
-            while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(12)  &&
-                    opModeIsActive())
-            {
-                robot.moveInches(robot.FORWARD,12,1);
-            }
-            robot.setPower(0);
-
-            while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(36)  &&
-                    opModeIsActive())
-            {
-                robot.setRotateRight();
-                robot.moveInches(36,1);
-            }
-            robot.setPower(0);
-
-            while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(17)  &&
-                    opModeIsActive())
-            {
-                robot.moveInches(robot.STRAFERIGHT,17,0.75);
-            }
-            robot.setPower(0);
-
-            //change this to a while statement like the others
-            robot.runWithOutEncoders();
-            robot.setStrafeLeft();
-            while(!detector.getAligned() && opModeIsActive())
-            {
-                robot.setPower(0.35);
-            }
-            robot.setPower(0);
-
-            while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(17)  &&
-                    opModeIsActive())
-            {
-                robot.moveInches(robot.STRAFERIGHT,4,0.35);
-            }
-            robot.setPower(0);
-
-            while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(30)  &&
-                    opModeIsActive())
-            {
-                robot.moveInches(robot.BACKWARD,30,1);
-            }
-
-            //change this to a servo instead of a crservo
-            robot.teamMarkerServo.setPower(1);
-            sleep(300);
-            robot.teamMarkerServo.setPower(0);
-
-            detector.disable();
-
+        //Robot drops from the lander, but is still attached
+        while(robot.leadScrewMotor.getCurrentPosition() > -7000 && opModeIsActive())
+        {
+            robot.leadScrewMotor.setTargetPosition(-7000);
+            robot.leadScrewMotor.setPower(-1);
         }
-        detector.disable();
+        robot.leadScrewMotor.setPower(0);
+        while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(12)  &&
+                opModeIsActive())
+        {
+            robot.moveInches(robot.FORWARD,12,1);
+        }
+        robot.setPower(0);
 
+        while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(36)  &&
+                opModeIsActive())
+        {
+            robot.setRotateRight();
+            robot.moveInches(36,1);
+        }
+        robot.setPower(0);
+
+        while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(17)  &&
+                opModeIsActive())
+        {
+            robot.moveInches(robot.STRAFERIGHT,17,0.75);
+        }
+        robot.setPower(0);
+
+        //change this to a while statement like the others
+        robot.runWithOutEncoders();
+        robot.setStrafeLeft();
+        while(!detector.getAligned() && opModeIsActive())
+        {
+            robot.setPower(0.35);
+        }
+        robot.setPower(0);
+
+        while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(17)  &&
+                opModeIsActive())
+        {
+            robot.moveInches(robot.STRAFERIGHT,4,0.35);
+        }
+        robot.setPower(0);
+
+        while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(30)  &&
+                opModeIsActive())
+        {
+            robot.moveInches(robot.BACKWARD,30,1);
+        }
+
+        //change this to a servo instead of a crservo
+        robot.teamMarkerServo.setPower(1);
+        sleep(300);
+        robot.teamMarkerServo.setPower(0);
+        detector.disable();
     }
 }
