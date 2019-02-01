@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name="DepotAuto")
+@Autonomous(name="ADepotAuto")
 
 public class DepotAuto extends LinearOpMode
 {
@@ -58,29 +58,20 @@ public class DepotAuto extends LinearOpMode
             robot.leadScrewMotor.setPower(-1);
         }
         robot.leadScrewMotor.setPower(0);
-        while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(12)  &&
-                opModeIsActive())
-        {
-            robot.moveInches(robot.FORWARD,12,1);
-        }
+
+        robot.moveInches(robot.FORWARD,12,1);
+        sleep(750);
         robot.setPower(0);
 
-        while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(36)  &&
-                opModeIsActive())
-        {
-            robot.setRotateRight();
-            robot.moveInches(36,1);
-        }
+        robot.setRotateRight();
+        robot.moveInches(36,1);
+        sleep(2000);
         robot.setPower(0);
 
-        while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(17)  &&
-                opModeIsActive())
-        {
-            robot.moveInches(robot.STRAFERIGHT,17,0.75);
-        }
+        robot.moveInches(robot.STRAFERIGHT,17,0.75);
+        sleep(900);
         robot.setPower(0);
 
-        //change this to a while statement like the others
         robot.runWithOutEncoders();
         robot.setStrafeLeft();
         while(!detector.getAligned() && opModeIsActive())
@@ -89,23 +80,16 @@ public class DepotAuto extends LinearOpMode
         }
         robot.setPower(0);
 
-        while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(17)  &&
-                opModeIsActive())
-        {
-            robot.moveInches(robot.STRAFERIGHT,4,0.35);
-        }
+        robot.moveInches(robot.STRAFERIGHT,4,0.35);
+        sleep(1000);
         robot.setPower(0);
 
-        while(robot.rightBackMotor.getCurrentPosition() < robot.inchesToTicks(30)  &&
-                opModeIsActive())
-        {
-            robot.moveInches(robot.BACKWARD,30,1);
-        }
+        robot.setDriveBackward();
+        robot.moveInches(30, 1);
+        sleep(1000);
 
-        //change this to a servo instead of a crservo
         robot.teamMarkerServo.setPower(1);
         sleep(300);
         robot.teamMarkerServo.setPower(0);
-        detector.disable();
     }
 }

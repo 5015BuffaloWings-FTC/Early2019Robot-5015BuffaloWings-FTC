@@ -13,6 +13,7 @@ public class TeleOpBuffaloWings extends OpMode
     public void init()
     {
         robot.robotHardwareMapInit(hardwareMap);
+        robot.resetEncoders();
         robot.runWithOutEncoders();
     }
 
@@ -118,6 +119,7 @@ public class TeleOpBuffaloWings extends OpMode
 
         telemetry.addData("Lead Screw Position:", robot.leadScrewMotor.getCurrentPosition());
         telemetry.addData("Lead Screw Limit switch", robot.leadScrewLimitBot.getState());
+        telemetry.addData("Right Back Motor Position", robot.rightBackMotor.getCurrentPosition());
         telemetry.update();
     }
 
