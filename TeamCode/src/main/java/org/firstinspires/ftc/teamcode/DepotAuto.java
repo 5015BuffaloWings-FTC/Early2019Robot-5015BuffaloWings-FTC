@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
-
+//add 1 mm wiggle room each measurement of rev servo
+//wire clip for wires on the back
+//make divider
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
@@ -41,7 +43,6 @@ public class DepotAuto extends LinearOpMode
         }
         robot.leadScrewMotor.setPower(0);
         robot.teamMarkerServo.setPower(0);
-
         //Resets robot encoder values before match
         robot.resetEncoders();//Resets encoder tick values, sets motor PID mode to STOP_AN1D_RESET_ENCODERS
 
@@ -52,9 +53,9 @@ public class DepotAuto extends LinearOpMode
          */
 
         //Robot drops from the lander, but is still attached
-        while(robot.leadScrewMotor.getCurrentPosition() > -7000 && opModeIsActive())
+        while(robot.leadScrewMotor.getCurrentPosition() > -7100 && opModeIsActive())
         {
-            robot.leadScrewMotor.setTargetPosition(-7000);
+            robot.leadScrewMotor.setTargetPosition(-7100);
             robot.leadScrewMotor.setPower(-1);
         }
         robot.leadScrewMotor.setPower(0);
@@ -64,7 +65,7 @@ public class DepotAuto extends LinearOpMode
         robot.setPower(0);
 
         robot.setRotateRight();
-        robot.moveInches(36,1);
+        robot.moveInches(37,1);
         sleep(2000);
         robot.setPower(0);
 
@@ -85,11 +86,11 @@ public class DepotAuto extends LinearOpMode
         robot.setPower(0);
 
         robot.setDriveBackward();
-        robot.moveInches(30, 1);
+        robot.moveInches(40, 1);
         sleep(1000);
 
         robot.teamMarkerServo.setPower(1);
-        sleep(300);
+        sleep(350);
         robot.teamMarkerServo.setPower(0);
     }
 }

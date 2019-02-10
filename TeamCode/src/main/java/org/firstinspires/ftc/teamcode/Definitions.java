@@ -21,10 +21,12 @@ public class Definitions
     DcMotor leftBackMotor = null;
     DcMotor rightFrontMotor = null;
     DcMotor rightBackMotor = null;
-    //DcMotor scoringArmMotor = null;
+    DcMotor scoringArmMotor = null;
     DcMotor armReelMotor = null;
     DcMotor leadScrewMotor = null;
     CRServo teamMarkerServo = null;
+    CRServo leftIntakeServo = null;
+    CRServo rightIntakeServo = null;
     DigitalChannel leadScrewLimitBot = null;
     //CRServo armServo = null;
 
@@ -38,15 +40,10 @@ public class Definitions
         leadScrewMotor = Map.dcMotor.get("leadScrewMotor");
         teamMarkerServo = Map.crservo.get("teamMarkerServo");
         leadScrewLimitBot = Map.digitalChannel.get("leadScrewLimitBot");
-        //scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
+        scoringArmMotor = Map.dcMotor.get("scoringArmMotor");
         armReelMotor = Map.dcMotor.get("armReelMotor");
-        //armServo = Map.crservo.get("armServo");
-        //armExtendorServo = Map.crservo.get("armExtendorServo");
-    }
-
-    public void dogeCVInit(GoldAlignDetector detector)
-    {
-
+        leftIntakeServo = Map.crservo.get("leftIntakeServo");
+        rightIntakeServo = Map.crservo.get("rightIntakeServo");
     }
 
     void runWithOutEncoders()
@@ -56,8 +53,8 @@ public class Definitions
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightBackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leadScrewMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //scoringArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //armReelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        scoringArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armReelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public int inchesToTicks(double inches)
@@ -113,16 +110,16 @@ public class Definitions
         rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leadScrewMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //armReelMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //scoringArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armReelMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        scoringArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         leftBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightBackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leadScrewMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //armReelMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //scoringArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armReelMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        scoringArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     void setPower(double power)

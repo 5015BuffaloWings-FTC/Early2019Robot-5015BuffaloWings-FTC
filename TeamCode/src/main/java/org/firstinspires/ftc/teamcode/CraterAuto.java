@@ -67,7 +67,7 @@ public class CraterAuto extends LinearOpMode
         if (opModeIsActive()) {
             //Robot drops from the lander, but is still attached
             robot.leadScrewMotor.setTargetPosition(-7000);
-            robot.leadScrewMotor.setPower(-1);
+            robot.leadScrewMotor.setPower(1);
             sleep(13400);
             robot.leadScrewMotor.setPower(0);
 
@@ -98,13 +98,11 @@ public class CraterAuto extends LinearOpMode
 
             robot.setDriveBackward();
             robot.moveInches(30, 1);
-            sleep(1000);
+            sleep( 1000);
 
             robot.teamMarkerServo.setPower(1);
             sleep(300);
             robot.teamMarkerServo.setPower(0);
-
-
 
             detector.disable();
 
