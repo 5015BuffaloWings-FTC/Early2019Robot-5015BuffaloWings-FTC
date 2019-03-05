@@ -41,9 +41,9 @@ public class TeleOpBuffaloWings extends OpMode
          * LEADSCREW SECTION
          */
         if (robot.leadScrewLimitBot.getState()) {
-            if (gamepad2.dpad_down) {
+            if (gamepad2.dpad_down || gamepad1.left_trigger == 1) {
                 robot.leadScrewMotor.setPower(1);
-            } else if (gamepad2.dpad_up) {
+            } else if (gamepad2.dpad_up || gamepad1.left_bumper) {
                 robot.leadScrewMotor.setPower(-1);
             } else
                 robot.leadScrewMotor.setPower(0);
@@ -56,8 +56,7 @@ public class TeleOpBuffaloWings extends OpMode
          * SCORING ARM SECTION
          */
 
-        robot.scoringArmMotor.setPower(-gamepad2.right_stick_y);
-
+        robot.scoringArmMotor.setPower(gamepad2.right_stick_y);
         robot.armReelMotor.setPower(-gamepad2.left_stick_y);
 
 
@@ -81,17 +80,9 @@ public class TeleOpBuffaloWings extends OpMode
         }
 
 
-        if(gamepad2.left_trigger == 1)
+        if(gamepad2.right_trigger == 1)
         {
-            robot.leftIntakeServo.setPower(0);
-        }
-        else if(gamepad2.right_trigger == 1)
-        {
-            robot.rightIntakeServo.setPower(0);
-        }
-        else if(gamepad2.left_bumper)
-        {
-            robot.leftIntakeServo.setPower(-1);
+            robot.rightIntakeServo.setPower(-1);
         }
         else if(gamepad2.right_bumper)
         {
@@ -99,8 +90,20 @@ public class TeleOpBuffaloWings extends OpMode
         }
         else
         {
+            robot.rightIntakeServo.setPower(0);
+        }
+
+        if(gamepad2.left_trigger == 1)
+        {
             robot.leftIntakeServo.setPower(1);
-            robot.rightIntakeServo.setPower(-1);
+        }
+        else if(gamepad2.left_bumper)
+        {
+            robot.leftIntakeServo.setPower(-1);
+        }
+        else
+        {
+            robot.leftIntakeServo.setPower(0);
         }
 
 
@@ -114,6 +117,7 @@ public class TeleOpBuffaloWings extends OpMode
         telemetry.addData("scoring arm motor position", robot.scoringArmMotor.getCurrentPosition());
         telemetry.addData("arm reel position", robot.armReelMotor.getCurrentPosition());
         telemetry.addData("left trigger", gamepad2.left_trigger);
+        telemetry.addData("right wheel", robot.leftBackMotor.getCurrentPosition());
         telemetry.update();
     }
 

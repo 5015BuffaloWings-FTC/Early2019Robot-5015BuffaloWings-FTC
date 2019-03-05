@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode;
-//add 1 mm wiggle room each measurement of rev servo
-//wire clip for wires on the back
-//make divider
+
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="ADepotAuto")
 
@@ -16,6 +15,7 @@ public class DepotAuto extends LinearOpMode
     // Detector object
     GoldAlignDetector detector;
     Definitions robot = new Definitions();
+    ElapsedTime time = new ElapsedTime();
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -53,9 +53,9 @@ public class DepotAuto extends LinearOpMode
          */
 
         //Robot drops from the lander, but is still attached
-        while(robot.leadScrewMotor.getCurrentPosition() > -7100 && opModeIsActive())
+        while(robot.leadScrewMotor.getCurrentPosition() > -7150 && opModeIsActive())
         {
-            robot.leadScrewMotor.setTargetPosition(-7100);
+            robot.leadScrewMotor.setTargetPosition(-7150);
             robot.leadScrewMotor.setPower(-1);
         }
         robot.leadScrewMotor.setPower(0);
@@ -73,6 +73,7 @@ public class DepotAuto extends LinearOpMode
         sleep(900);
         robot.setPower(0);
 
+        robot.resetEncoders();
         robot.runWithOutEncoders();
         robot.setStrafeLeft();
         while(!detector.getAligned() && opModeIsActive())
@@ -81,7 +82,7 @@ public class DepotAuto extends LinearOpMode
         }
         robot.setPower(0);
 
-        robot.moveInches(robot.STRAFERIGHT,4,0.35);
+        robot.moveInches(robot.STRAFERIGHT,3,0.35);
         sleep(1000);
         robot.setPower(0);
 
@@ -92,5 +93,7 @@ public class DepotAuto extends LinearOpMode
         robot.teamMarkerServo.setPower(1);
         sleep(350);
         robot.teamMarkerServo.setPower(0);
+
+        detector.disable();
     }
 }
