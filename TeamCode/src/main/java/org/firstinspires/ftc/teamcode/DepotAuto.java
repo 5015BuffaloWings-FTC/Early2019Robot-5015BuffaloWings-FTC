@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.opencv.core.Point;
+
 @Autonomous(name="ADepotAuto")
 
 public class DepotAuto extends LinearOpMode
@@ -15,7 +17,6 @@ public class DepotAuto extends LinearOpMode
     // Detector object
     GoldAlignDetector detector;
     Definitions robot = new Definitions();
-    ElapsedTime time = new ElapsedTime();
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -28,6 +29,8 @@ public class DepotAuto extends LinearOpMode
         //Setup detector
         detector = new GoldAlignDetector();// Create the detector
         detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());// Initialize detector with app context and camera
+        detector.cropTLCorner = new Point(200, 200); //Sets the top left corner of the new image, in pixel (x,y) coordinates
+        detector.cropBRCorner = new Point(400, 400); //Sets the bottom right corner of the new image, in pixel (x,y) coordinates
         detector.useDefaults();// Set detector to use default settings
         detector.downscale = 0.4;//How much to downscale the input frames
         detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA;//Camera input tuning
@@ -41,12 +44,6 @@ public class DepotAuto extends LinearOpMode
         while (robot.leadScrewLimitBot.getState()) {
             robot.leadScrewMotor.setPower(0.75);
         }
-        robot.leadScrewMotor.setPower(0);
-        robot.teamMarkerServo.setPower(0);
-        //Resets robot encoder values before match
-        robot.resetEncoders();//Resets encoder tick values, sets motor PID mode to STOP_AN1D_RESET_ENCODERS
-
-        waitForStart();//Waits until driver clicks the start button1
 
         /**
          * Autonomous starts - Match time of 0 seconds
