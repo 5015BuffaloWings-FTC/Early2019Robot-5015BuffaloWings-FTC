@@ -29,9 +29,7 @@ public class DepotAuto extends LinearOpMode
         //Setup detector
         detector = new GoldAlignDetector();// Create the detector
         detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());// Initialize detector with app context and camera
-        detector.cropTLCorner = new Point(200, 200); //Sets the top left corner of the new image, in pixel (x,y) coordinates
-        detector.cropBRCorner = new Point(400, 400); //Sets the bottom right corner of the new image, in pixel (x,y) coordinates
-        detector.useDefaults();// Set detector to use default settings
+        detector.cropTLCorner = new Point(1, 200); //Sets the top left corner of the new
         detector.downscale = 0.4;//How much to downscale the input frames
         detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA;//Camera input tuning
         detector.maxAreaScorer.weight = 0.001;
