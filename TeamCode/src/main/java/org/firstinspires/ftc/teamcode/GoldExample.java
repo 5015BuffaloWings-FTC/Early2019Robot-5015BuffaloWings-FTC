@@ -50,6 +50,7 @@ public class GoldExample extends OpMode
     private boolean cubeLeft;
     private boolean cubeCenter;
     private boolean cubeRight;
+    private Point cubeLocation;
 
     @Override
     public void init() {
@@ -99,7 +100,8 @@ public class GoldExample extends OpMode
     public void loop() {
         telemetry.addData("IsFound: ", detector.isFound());
         Rect rect = detector.getFoundRect();
-        if(detector.isFound()) telemetry.addData("Location: ", Integer.toString((int) (rect.x + rect.width*0.5)) + ", " + Integer.toString((int) (rect.y+0.5*rect.height)));
+//        if(detector.isFound()) telemetry.addData("Location: ", Integer.toString((int) (rect.x + rect.width*0.5)) + ", " + Integer.toString((int) (rect.y+0.5*rect.height)));
+        telemetry.addData("Location: ", detector.getScreenPosition());
         telemetry.update();
     }
 
