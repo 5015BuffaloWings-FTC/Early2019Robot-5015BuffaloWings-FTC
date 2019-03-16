@@ -4,6 +4,7 @@ import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -11,7 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.opencv.core.Point;
 
 @Autonomous(name="ADepotAuto")
-
+@Disabled
 public class DepotAuto extends LinearOpMode
 {
     // Detector object
@@ -28,7 +29,8 @@ public class DepotAuto extends LinearOpMode
 
         //Setup detector
         detector = new GoldAlignDetector();// Create the detector
-        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());// Initialize detector with app context and camera
+        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());// Initialize detector with
+        // app context and camera
         detector.cropTLCorner = new Point(1, 200); //Sets the top left corner of the new
         detector.downscale = 0.4;//How much to downscale the input frames
         detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA;//Camera input tuning
